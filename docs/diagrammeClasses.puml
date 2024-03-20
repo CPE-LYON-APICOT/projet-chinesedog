@@ -1,0 +1,116 @@
+@startuml ChineseDog
+
+class Carte {
+    -List<><Case> cases
+    -int largeur
+    -int hauteur
+}
+
+class Case {
+    -int x
+    -int y
+    -TypeCase type
+}
+
+enum TypeCase {
+    HERBE
+    CHEMIN
+    BASE
+    TOUR
+}
+
+abstract class Defense implements Attaque, estAchetable {
+    -String nom
+    -List<int> coordonnees
+    -int portee
+    -int degats
+    -int cadence
+    -int cout
+    -int niveau
+    -int niveauDebloque
+    -bool peutAttaquerVolant
+}
+
+class AmeliorationDefense {
+    -Defense defense
+    +void AmeliorationDefense()
+    +void AmeliorationStatDefense()
+}
+
+abstract class DefenseMap extends Defense {
+}
+
+abstract class DefenseBase extends Defense {
+}
+
+class TourMage extends DefenseMap {
+    -int bonusMagique
+}
+
+class Canon extends DefenseMap {
+    -int  bonusPhysique
+}
+
+class Catapulte extends DefenseBase {
+    -int bonusPhysique
+}
+
+class Base {
+    -int vie
+    -int niveau
+    -DefenseBase defenseBase
+}
+
+abstract class Ennemi implements Attaque {
+    -int vie
+    -int vitesse
+    -int armure
+    -int resistanceMagique
+    +bool peutAttaquerVolant()
+    +void attaquer()
+}
+
+class EnnemiTerrestre extends Ennemi {
+    
+}
+
+class EnnemiVolant extends Ennemi {
+    
+}
+
+class EnnemiBoss extends Ennemi {
+    
+}
+
+class Pouvoir {
+    -String nom
+    -int cooldown
+    -int niveau
+    -Effet effet
+}
+
+class Partie {
+    -Base base
+    -List<Defense> defenses
+    -List<Ennemi> ennemis
+    -int vague
+    -int argent
+    -int niveau
+    +void lancerVague()
+    +void acheterDefense()
+    +void ameliorerDefense()
+    +void vendreDefense()
+    +void attaquer()
+}
+
+interface Attaque {
+    +void attaquer()
+}
+
+interface estAchetable {
+    +void acheter()
+    +int getPrix()
+}
+
+
+@enduml
