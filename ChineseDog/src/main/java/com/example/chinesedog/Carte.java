@@ -46,7 +46,17 @@ public class Carte {
         for (int i = 0; i < hauteur; i++) {
             List<Case> ligne = new ArrayList<>();
             for (int j = 0; j < largeur; j++) {
-                ligne.add(new Case(i, j, TypeCase.valueOf(carte.substring(i * largeur + j, i * largeur + j + 1)), "C:\\Users\\Portal\\Desktop\\Cours\\POO\\Projet\\projet-chinesedog\\ChineseDog\\src\\main\\java\\com\\example\\chinesedog\\assets\\Texture\\4\\PNG\\mapTile_022.png"));
+                String path = String.valueOf(TypeCase.valueOf(carte.substring(i * largeur + j, i * largeur + j + 1)));
+                if (path.equals("H")) {
+                    path = "C:\\Users\\Portal\\Desktop\\Cours\\POO\\Projet\\projet-chinesedog\\ChineseDog\\src\\main\\java\\com\\example\\chinesedog\\assets\\Texture\\4\\PNG\\mapTile_022.png";
+                } else if (path.equals("C")) {
+                    path = "C:\\Users\\Portal\\Desktop\\Cours\\POO\\Projet\\projet-chinesedog\\ChineseDog\\src\\main\\java\\com\\example\\chinesedog\\assets\\Texture\\4\\PNG\\mapTile_087.png";
+                } else if (path.equals("B")) {
+                    path = "C:\\Users\\Portal\\Desktop\\Cours\\POO\\Projet\\projet-chinesedog\\ChineseDog\\src\\main\\java\\com\\example\\chinesedog\\assets\\Texture\\4\\PNG\\mapTile_020.png";
+                } else if (path.equals("T")) {
+                    path = "C:\\Users\\Portal\\Desktop\\Cours\\POO\\Projet\\projet-chinesedog\\ChineseDog\\src\\main\\java\\com\\example\\chinesedog\\assets\\Texture\\4\\PNG\\mapTile_027.png";
+                }
+                ligne.add(new Case(i, j, TypeCase.valueOf(carte.substring(i * largeur + j, i * largeur + j + 1)), path));
             }
             cases.add(ligne);
         }

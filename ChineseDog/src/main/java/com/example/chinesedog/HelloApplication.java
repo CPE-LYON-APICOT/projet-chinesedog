@@ -29,7 +29,7 @@ public class HelloApplication extends Application {
 
         Carte carte = new Carte(10, 10, cases);
         System.out.println(carte.displayCarte());
-        String test = "HHHHHBBHHHHHBBHHHHHCCCHHHTTTTT";
+        String test = "HHHHHTTHHHHHTTHHHHHCCCHHHTTTTT";
         Carte carte2 = new Carte(5, 6, test);
         Carte carteConverti = carte2.switchStringToCarte(test);
         carteConverti.displayCarte();
@@ -38,9 +38,9 @@ public class HelloApplication extends Application {
         GridPane gridPane = new GridPane();
 
         // Parcourir la liste de listes d'objets Case
-        for (int i = 0; i < carte.gethauteur(); i++) {
-            for (int j = 0; j < carte.getlargeur(); j++) {
-                Case c = carte.getCases().get(i).get(j);
+        for (int i = 0; i < carteConverti.gethauteur(); i++) {
+            for (int j = 0; j < carteConverti.getlargeur(); j++) {
+                Case c = carteConverti.getCases().get(i).get(j);
                 // Création de l'image
                 Image image = new Image(new File(c.getImagePath()).toURI().toString());
                 ImageView imageView = new ImageView(image);
