@@ -29,9 +29,18 @@ public class HelloApplication extends Application {
 
         Carte carte = new Carte(10, 10, cases);
         System.out.println(carte.displayCarte());
-        String test = "HHHHHTTHHHHHTTHHHHHCCCHHHTTTTT";
+        String test =   "HHHCHHHHHH" +
+                        "HCCCHHHHHH" +
+                        "HCHHHHHHHH" +
+                        "HCHHHHHHHH" +
+                        "HCCCCCHHHH" +
+                        "HCHHHHHHHH" +
+                        "HCHHHHHHHH" +
+                        "HCHHHHTHHH" +
+                        "HCHHHHHHHH" +
+                        "HCCCCCHHHH";
         Carte carte2 = new Carte(5, 6, test);
-        Carte carteConverti = carte2.switchStringToCarte(test);
+        Carte carteConverti = carte.switchStringToCarte(test);
         carteConverti.displayCarte();
 
         // Création d'une grille pour afficher les images
@@ -42,6 +51,7 @@ public class HelloApplication extends Application {
             for (int j = 0; j < carteConverti.getlargeur(); j++) {
                 Case c = carteConverti.getCases().get(i).get(j);
                 // Création de l'image
+                System.out.println(c.getImagePath());
                 Image image = new Image(new File(c.getImagePath()).toURI().toString());
                 ImageView imageView = new ImageView(image);
                 // Création d'un StackPane pour afficher l'image
@@ -51,7 +61,6 @@ public class HelloApplication extends Application {
                 gridPane.add(stackPane, j, i);
             }
         }
-
         // Création de la scène et affichage
         Scene scene = new Scene(gridPane, 850, 850);
         primaryStage.setScene(scene);
