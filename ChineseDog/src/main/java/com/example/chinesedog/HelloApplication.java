@@ -10,7 +10,6 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,45 +26,43 @@ public class HelloApplication extends Application {
             cases.add(ligne);
         }
 
+        // Test Ennemi/Vague
+        List<Ennemi> ennemis = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            Ennemi ennemi = new EnnemiTerrestre(100, 10, 10, 10, "testTerrestrial", "C:\\Users\\Portal\\Desktop\\Cours\\POO\\Projet\\projet-chinesedog\\ChineseDog\\src\\main\\java\\com\\example\\chinesedog\\assets\\Enemy\\2\\Foozle_2DC0028_Spire_EnemyPack_2_Ground\\Ground\\Previews\\Scorpion.gif", false);
+/*            System.out.println(ennemi);*/
+            ennemis.add(ennemi);
+        }
+        Vague vague = new Vague(10, 1, 1, ennemis);
+/*        vague.displayVague();*/
+
         Carte carte = new Carte(10, 10, cases);
-        System.out.println(carte.displayCarte());
-        String test =   "HHHCHHHHHH" +
-                        "HCCCHHHHHH" +
-                        "HCHHHHHHHH" +
-                        "HCHHHHHHHH" +
-                        "HCCCCCHHHH" +
-                        "HCHHHHHHHH" +
-                        "HCHHHHHHHH" +
-                        "HCHHHHTHHH" +
-                        "HCHHHHHHHH" +
-                        "HCCCCCHHHH";
-        Carte carte2 = new Carte(5, 6, test);
-        Carte carteConverti = carte.switchStringToCarte(test);
-        carteConverti.displayCarte();
+        String test = "HHHHHHHHCCHHHHCCHHHHCCTHHTCCHHHHCCTHHTCCHHHHCCTHHTCCHHHHCCHH";
+        Carte carte2 = new Carte(10, 6, test);
+        Carte carteConverti = carte2.switchStringToCarte(test);
+/*        carteConverti.displayCarte();*/
 
         // Création d'une grille pour afficher les images
         GridPane gridPane = new GridPane();
 
         // Parcourir la liste de listes d'objets Case
-        for (int i = 0; i < carteConverti.gethauteur(); i++) {
-            for (int j = 0; j < carteConverti.getlargeur(); j++) {
-                Case c = carteConverti.getCases().get(i).get(j);
-                // Création de l'image
-                System.out.println(c.getImagePath());
-                Image image = new Image(new File(c.getImagePath()).toURI().toString());
-                ImageView imageView = new ImageView(image);
-                // Création d'un StackPane pour afficher l'image
-                StackPane stackPane = new StackPane();
-                stackPane.getChildren().add(imageView);
-                // Ajout du StackPane à la grille
-                gridPane.add(stackPane, j, i);
+        for (int i = 0; i < carteConverti.getHauteur(); i++) {
+            List<Case> ligne = carteConverti.getCases().get(i);
+            for (int j = 0; j < ligne.size(); j++) {
+                Case currentCase = ligne.get(j);
+                String imagePath = currentCase.getImagePath();
+                Image image = new Image("file:" + imagePath); // Chargement de l'image à partir du chemin d'accès
+                ImageView imageView = new ImageView(image); // Création d'une vue d'image
+                gridPane.add(imageView, j, i); // Ajout de l'image à la grille
             }
         }
+
         // Création de la scène et affichage
         Scene scene = new Scene(gridPane, 850, 850);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Affichage des images des cases");
         primaryStage.show();
+
     }
 
     public static void main2(String[] args) {
