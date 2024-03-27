@@ -62,4 +62,12 @@ public class Carte {
         }
         return new Carte(hauteur, largeur, cases);
     }
+
+    public int getHauteur() {
+        return hauteur;
+    }
+
+    public int getLargeur() {
+        return largeur;
+    }
 }
