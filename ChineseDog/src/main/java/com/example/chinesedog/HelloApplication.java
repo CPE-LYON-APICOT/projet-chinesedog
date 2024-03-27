@@ -30,11 +30,13 @@ public class HelloApplication extends Application {
         List<Ennemi> ennemis = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             Ennemi ennemi = new EnnemiTerrestre(100, 10, 10, 10, "testTerrestrial", "C:\\Users\\Portal\\Desktop\\Cours\\POO\\Projet\\projet-chinesedog\\ChineseDog\\src\\main\\java\\com\\example\\chinesedog\\assets\\Enemy\\2\\Foozle_2DC0028_Spire_EnemyPack_2_Ground\\Ground\\Previews\\Scorpion.gif", false);
+            Ennemi ennemivol = new EnnemiVolant(100, 10, 10, 10, "testennemivol", "C:\\Users\\Portal\\Desktop\\Cours\\POO\\Projet\\projet-chinesedog\\ChineseDog\\src\\main\\java\\com\\example\\chinesedog\\assets\\Enemy\\2\\Foozle_2DC0028_Spire_EnemyPack_2_Ground\\Ground\\Previews\\Scorpion.gif", false);
 /*            System.out.println(ennemi);*/
             ennemis.add(ennemi);
+            ennemis.add(ennemivol);
         }
         Vague vague = new Vague(10, 1, 1, ennemis);
-/*        vague.displayVague();*/
+        vague.displayVague();
 
         Carte carte = new Carte(10, 10, cases);
         String test = "HHHHHHHHCCHHHHCCHHHHCCTHHTCCHHHHCCTHHTCCHHHHCCTHHTCCHHHHCCHH";
