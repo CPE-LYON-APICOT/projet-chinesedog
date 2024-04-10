@@ -1,4 +1,6 @@
-package com.example.chinesedog;
+package com.example.chinesedog.Model;
+
+import com.example.chinesedog.TypeCase;
 
 import java.util.ArrayList;
 import java.util.List;

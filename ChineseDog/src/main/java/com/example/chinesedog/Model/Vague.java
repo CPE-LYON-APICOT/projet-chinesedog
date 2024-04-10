@@ -1,4 +1,4 @@
-package com.example.chinesedog;
+package com.example.chinesedog.Model;
 
 import java.util.List;
 

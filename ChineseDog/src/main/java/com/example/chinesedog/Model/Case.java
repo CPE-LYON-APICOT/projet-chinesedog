@@ -1,4 +1,7 @@
-package com.example.chinesedog;
+package com.example.chinesedog.Model;
+
+import com.example.chinesedog.TypeCase;
+
 public class Case {
     private TypeCase type;
     private int x;

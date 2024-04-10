@@ -1,4 +1,4 @@
-package com.example.chinesedog;
+package com.example.chinesedog.Model;
 
 abstract public class Ennemi {
 

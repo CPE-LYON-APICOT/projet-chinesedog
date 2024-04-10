@@ -1,15 +1,13 @@
 package com.example.chinesedog;
 
+import com.example.chinesedog.Model.*;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +19,7 @@ public class HelloApplication extends Application {
         for (int i = 0; i < 10; i++) {
             List<Case> ligne = new ArrayList<>();
             for (int j = 0; j < 10; j++) {
-                ligne.add(new Case(i, j, TypeCase.H, "C:\\Users\\Portal\\Desktop\\Cours\\POO\\Projet\\projet-chinesedog\\ChineseDog\\src\\main\\java\\com\\example\\chinesedog\\assets\\Texture\\4\\PNG\\mapTile_022.png"));
+                ligne.add(new Case(i, j, TypeCase.H, "\\src\\main\\java\\com\\example\\chinesedog\\assets\\Texture\\4\\PNG\\mapTile_022.png"));
             }
             cases.add(ligne);
         }
@@ -38,9 +36,21 @@ public class HelloApplication extends Application {
         Vague vague = new Vague(10, 1, 1, ennemis);
         vague.displayVague();
 
+
+
+
         Carte carte = new Carte(10, 10, cases);
-        String test = "HHHHHHHHCCHHHHCCHHHHCCTHHTCCHHHHCCTHHTCCHHHHCCTHHTCCHHHHCCHH";
-        Carte carte2 = new Carte(10, 6, test);
+        String test =   "HHHCHHHHHH" +
+                        "HCCCHHHHHH" +
+                        "HCHHHHHHHH" +
+                        "HCHHHHHHHH" +
+                        "HCCCCCHHHH" +
+                        "HCHHHHHHHH" +
+                        "HCHHHHHHHH" +
+                        "HCHHHHTHHH" +
+                        "HCHHHHHHHH" +
+                        "HCCCCCHHHH";
+        Carte carte2 = new Carte(10, 10, test);
         Carte carteConverti = carte2.switchStringToCarte(test);
 /*        carteConverti.displayCarte();*/
 

@@ -1,4 +1,6 @@
-package com.example.chinesedog;
+package com.example.chinesedog.Model;
+
+import com.example.chinesedog.attaquer;
 
 public class EnnemiTerrestre extends Ennemi implements attaquer {
 
