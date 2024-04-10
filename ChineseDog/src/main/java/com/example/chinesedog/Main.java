@@ -1,17 +1,7 @@
 package com.example.chinesedog;
 
-import com.example.chinesedog.Case;
-import com.example.chinesedog.Carte;
-import com.example.chinesedog.TypeCase;
+import com.example.chinesedog.Model.*;
 
-import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.StackPane;
-import javafx.stage.Stage;
-
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.example.chinesedog;
+package com.example.chinesedog.Controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
