@@ -1,21 +1,20 @@
 package com.example.chinesedog;
 
+import com.example.chinesedog.Model.MapClickHandler;
 import javafx.application.Application;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
-import javafx.embed.swing.SwingFXUtils;
 import javafx.stage.Stage;
-import javax.imageio.ImageIO;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
+
 import java.io.File;
 import java.io.IOException;
-import javafx.scene.control.Button;
-import javafx.util.Duration;
-import javafx.animation.TranslateTransition;
+import javax.imageio.ImageIO;
 
 public class test extends Application {
     @Override
@@ -45,7 +44,6 @@ public class test extends Application {
 
         for (int i = 0; i < map.length(); i++) {
             char c = map.charAt(i);
-            System.out.println(c);
             switch (c) {
                 case 'H':
                     g2d.drawImage(herbe, currentX, currentY, null);
@@ -80,34 +78,13 @@ public class test extends Application {
         StackPane root = new StackPane();
         Scene scene = new Scene(root, combinedWidth, combinedHeight);
         root.getChildren().add(imageView);
-        ImageView shopView = createShopView(root);
-        shopView.setVisible(false);
-        // Ajoute un gestionnaire d'événements de clic à l'ImageView
-        imageView.setOnMouseClicked(event -> {
-            // Obtenir les coordonnées du clic
-            double mouseX = event.getX();
-            double mouseY = event.getY();
+        ImageView shopView = new ImageView(new Image("file:///" + currentPath + "/src/main/resources/com/example/chinesedog/assets/shop/side.png"));
 
-            // Calculer l'index de la case sélectionnée
-            int row = (int) (mouseY / herbe.getHeight());
-            int col = (int) (mouseX / herbe.getWidth());
-            int numCase = (numRows * row) + col;
-            // Vérifier si la case sélectionnée est dans les limites de votre carte
-            if (row >= 0 && row < numRows && col >= 0 && col < numCols) {
-                System.out.println("Case sélectionnée : Ligne " + row + ", Colonne " + col);
-                for (int i = 0; i < map.length(); i++) {
-                    if (i == numCase) {
-                        System.out.println(mapSansEspace.charAt(i));
-                        if (mapSansEspace.charAt(i) == 'T') {
-                            ouvrirShop(root, shopView);
-                        }
-                        else {
-                            fermerShop(root, shopView);
-                        }
-                    }
-                }
-            }
-        });
+        // Créer une instance de MapClickHandler
+        MapClickHandler clickHandler = new MapClickHandler(0,0, numRows, numCols, herbe.getWidth(), herbe.getHeight(), root, shopView, mapSansEspace);
+        scene.setOnMouseClicked(clickHandler);
+
+        createShopView(root, createItemsShop(currentPath, root, clickHandler.getImageX(), clickHandler.getImageY(), clickHandler), shopView);
 
         primaryStage.setScene(scene);
         primaryStage.setTitle("Image combinée");
@@ -115,32 +92,69 @@ public class test extends Application {
         primaryStage.show();
     }
 
-    private void ouvrirShop(StackPane root, ImageView shopView) {
-        // Utilisation de la même instance de l'ImageView du magasin
-        TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(1), shopView);
-        translateTransition.setFromX(400); // Position initiale sur l'axe X (à droite)
-        translateTransition.setToX(260);    // Position finale sur l'axe X (au centre)
-        translateTransition.setFromY(50); // Position initiale sur l'axe X (à droite)
-        translateTransition.setToY(30);    // Position finale sur l'axe X (au centre)
-        translateTransition.play();
-        shopView.setVisible(true);
-    }
-
-    private ImageView createShopView(StackPane root) {
-        String currentPath = System.getProperty("user.dir");
-        ImageView shopView = new ImageView(new Image("file:///" + currentPath + "/src/main/resources/com/example/chinesedog/assets/shop/side.png"));
-        root.getChildren().add(shopView);
-        return shopView;
-    }
-
-    private void fermerShop(StackPane root, ImageView shopView) {
-        // Utilisation de la même instance de l'ImageView du magasin
-        System.out.println("Fermer shop");
-        TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(1), shopView);
-        translateTransition.setFromX(260); // Position initiale sur l'axe X (au centre)
-        translateTransition.setToX(400);   // Position finale sur l'axe X (à droite, hors de l'écran)
-        translateTransition.play();
+    private void createShopView(StackPane root, ImageView[] itemViews, ImageView shopView) {
+        if (root.getChildren().contains(shopView)) {
+            return;
+        }
         shopView.setVisible(false);
+        root.getChildren().addAll(shopView, itemViews[0], itemViews[1], itemViews[2]);
+    }
+
+    private ImageView[] createItemsShop(String currentPath, StackPane root, Double imageX, Double imageY, MapClickHandler clickHandler) {
+        Image canon1 = new Image("file:///" + currentPath + "/src/main/resources/com/example/chinesedog/assets/Tower/5/tower_2.png");
+        Image canon2 = new Image("file:///" + currentPath + "/src/main/resources/com/example/chinesedog/assets/Tower/5/tower_1.png");
+        Image canon3 = new Image("file:///" + currentPath + "/src/main/resources/com/example/chinesedog/assets/Tower/5/tower_3.png");
+
+        ImageView canon1View = new ImageView(canon1);
+        ImageView canon2View = new ImageView(canon2);
+        ImageView canon3View = new ImageView(canon3);
+        System.out.println("imageX = " + imageX);
+        System.out.println("imageY = " + imageY);
+        canon1View.setTranslateX(295);
+        canon1View.setTranslateY(-265);
+        canon1View.setVisible(false);
+        canon1View.setOnMouseClicked(event -> {
+            System.out.println("Clic sur l'élément du magasin 1 !");
+            System.out.println("imageX = " + imageX);
+            System.out.println("imageY = " + imageY);
+            buyTower(canon1View, root, clickHandler.getImageX(), clickHandler.getImageY());
+            event.consume();
+        });
+
+        canon2View.setTranslateX(230);
+        canon2View.setTranslateY(-265);
+        canon2View.setVisible(false);
+        canon2View.setOnMouseClicked(event -> {
+            System.out.println("Clic sur l'élément du magasin 2 !");
+            System.out.println("imageX = " + imageX);
+            System.out.println("imageY = " + imageY);
+            buyTower(canon2View, root, clickHandler.getImageX(), clickHandler.getImageY());
+            event.consume();
+        });
+
+        canon3View.setTranslateX(230);
+        canon3View.setTranslateY(-200);
+        canon3View.setVisible(false);
+        canon3View.setOnMouseClicked(event -> {
+            System.out.println("Clic sur l'élément du magasin 3 !");
+            System.out.println("imageX = " + imageX);
+            System.out.println("imageY = " + imageY);
+            buyTower(canon3View, root, clickHandler.getImageX(), clickHandler.getImageY());
+            event.consume();
+        });
+
+        return new ImageView[]{canon1View, canon2View, canon3View};
+
+    }
+
+    private void buyTower(ImageView achat, StackPane root, double imageX, double imageY) {
+        ImageView imageView = new ImageView(achat.getImage());
+        System.out.println("Achat d'une tour !");
+        imageView.setTranslateY(imageX - 352);
+        imageView.setTranslateX(imageY - 352);
+        System.out.println("Position de la tour : " + imageX + ", " + imageY);
+        imageView.setVisible(true);
+        root.getChildren().add(imageView);
     }
 
     public static void main(String[] args) {
