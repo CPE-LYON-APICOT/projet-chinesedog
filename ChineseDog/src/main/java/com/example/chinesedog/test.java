@@ -1,6 +1,6 @@
 package com.example.chinesedog;
 
-import com.example.chinesedog.Model.MapClickHandler;
+import com.example.chinesedog.Model.*;
 import javafx.application.Application;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.Scene;
@@ -14,6 +14,8 @@ import java.awt.image.BufferedImage;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.imageio.ImageIO;
 
 public class test extends Application {
@@ -31,7 +33,34 @@ public class test extends Application {
 
         String map = "HHHHHCHHTH HHHHTCCCCH HHHHHHHTCH HTHHTHHHCH HCCCCHHHCH HCHTCHHHCT HCHCCHHHCH TCHCHHHTCH HCHCCCCCCH HCHHTHHHHH";
         String mapSansEspace = "HHHHHCHHTHHHHHTCCCCHHHHHHHHTCHHTHHTHHHCHHCCCCHHHCHHCHTCHHHCTHCHCCHHHCHTCHCHHHTCHHCHCCCCCCHHCHHTHHHHH";
+        Carte carte = new Carte(numRows, numCols, map, mapSansEspace);
+        List<List<Case>> cases = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            List<Case> ligne = new ArrayList<>();
+            for (int j = 0; j < 10; j++) {
+                ligne.add(new Case(i, j, TypeCase.valueOf(String.valueOf(mapSansEspace.charAt(i * 10 + j))), false));
+                System.out.print(ligne.get(j).getType());
+            }
+            cases.add(ligne);
+        }
 
+        Carte carteConverti = carte.switchStringToCarte(mapSansEspace);
+        carteConverti.displayCarte();
+
+       /// Test Ennemi/Vague
+        List<Ennemi> ennemis = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            Ennemi ennemi = new EnnemiTerrestre(100, 10, 10, 10, "testTerrestrial", "C:\\Users\\Portal\\Desktop\\Cours\\POO\\Projet\\projet-chinesedog\\ChineseDog\\src\\main\\java\\com\\example\\chinesedog\\assets\\Enemy\\2\\Foozle_2DC0028_Spire_EnemyPack_2_Ground\\Ground\\Previews\\Scorpion.gif",false);
+            System.out.println(ennemi);
+            ennemis.add(ennemi);
+        }
+        Vague vague = new Vague(10, 1, 1, ennemis);
+        vague.displayVague();
+
+        Tour canon = new Canon("Canon", 1, 50, 10, 3, 10);
+        System.out.println("Description = \n" + canon.getDescription());
+        canon = new Niveau2(canon);
+        System.out.println("\n\nDescription = \n" + canon.getDescription());
 
         // Créer une nouvelle image avec une largeur et une hauteur suffisamment grandes pour contenir les deux images
         int combinedWidth = herbe.getWidth() * numRows;
@@ -154,7 +183,15 @@ public class test extends Application {
         imageView.setTranslateX(imageY - 352);
         System.out.println("Position de la tour : " + imageX + ", " + imageY);
         imageView.setVisible(true);
+        fermerShop(root);
         root.getChildren().add(imageView);
+    }
+
+    public void fermerShop(StackPane root) {
+        root.getChildren().get(1).setVisible(false);
+        root.getChildren().get(2).setVisible(false);
+        root.getChildren().get(3).setVisible(false);
+        root.getChildren().get(4).setVisible(false);
     }
 
     public static void main(String[] args) {

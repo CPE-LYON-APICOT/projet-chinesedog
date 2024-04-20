@@ -1,3 +1,4 @@
+/*
 package com.example.chinesedog;
 
 import com.example.chinesedog.Model.*;
@@ -36,4 +37,4 @@ public class Main {
         Vague vague = new Vague(10, 1, 1, ennemis);
         vague.displayVague();
     }
-}
+}*/

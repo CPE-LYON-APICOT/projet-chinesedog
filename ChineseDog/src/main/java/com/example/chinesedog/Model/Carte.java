@@ -8,6 +8,7 @@ import java.lang.System;
 
 public class Carte {
     private String carteString;
+    private String carteStringSansEspace;
     private int hauteur;
     private int largeur;
     private List<List<Case>> cases;
@@ -18,10 +19,11 @@ public class Carte {
         this.cases = cases;
     }
 
-    public Carte(int hauteur, int largeur, String carteString) {
+    public Carte(int hauteur, int largeur, String carteString, String carteStringSansEspace) {
         this.largeur = largeur;
         this.hauteur = hauteur;
         this.carteString = carteString;
+        this.carteStringSansEspace = carteStringSansEspace;
     }
 
     public int gethauteur() {
@@ -51,17 +53,7 @@ public class Carte {
         for (int i = 0; i < hauteur; i++) {
             List<Case> ligne = new ArrayList<>();
             for (int j = 0; j < largeur; j++) {
-                String path = String.valueOf(TypeCase.valueOf(carte.substring(i * largeur + j, i * largeur + j + 1)));
-                if (path.equals("H")) {
-                    path = currentPath.concat("\\src\\main\\java\\com\\example\\chinesedog\\assets\\Texture\\4\\PNG\\mapTile_022.png");
-                } else if (path.equals("C")) {
-                    path = currentPath.concat("\\src\\main\\java\\com\\example\\chinesedog\\assets\\Texture\\4\\PNG\\mapTile_087.png");
-                } else if (path.equals("B")) {
-                    path = currentPath.concat("\\src\\main\\java\\com\\example\\chinesedog\\assets\\Texture\\4\\PNG\\mapTile_020.png");
-                } else if (path.equals("T")) {
-                    path = currentPath.concat("\\src\\main\\java\\com\\example\\chinesedog\\assets\\Texture\\4\\PNG\\mapTile_027.png");;
-                }
-                ligne.add(new Case(i, j, TypeCase.valueOf(carte.substring(i * largeur + j, i * largeur + j + 1)), path));
+                ligne.add(new Case(i, j, TypeCase.valueOf(carte.substring(i * largeur + j, i * largeur + j + 1)), false));
             }
             cases.add(ligne);
         }

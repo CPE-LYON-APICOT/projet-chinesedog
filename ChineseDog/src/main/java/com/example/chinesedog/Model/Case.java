@@ -6,13 +6,13 @@ public class Case {
     private TypeCase type;
     private int x;
     private int y;
-    private String imagePath;
+    private boolean isOccupied;
 
-    public Case(int x, int y, TypeCase type, String imagePath) {
+    public Case(int x, int y, TypeCase type, boolean isOccupied) {
         this.x = x;
         this.y = y;
         this.type = type;
-        this.imagePath = imagePath;
+        this.isOccupied = isOccupied;
     }
 
 
@@ -27,8 +27,10 @@ public class Case {
     public TypeCase getType() {
         return type;
     }
-
-    public String getImagePath() {
-        return imagePath;
+    public boolean getIsOccupied() {
+        return isOccupied;
+    }
+    public void setIsOccupied(boolean isOccupied) {
+        this.isOccupied = isOccupied;
     }
 }

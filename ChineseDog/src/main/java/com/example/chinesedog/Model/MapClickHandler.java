@@ -55,7 +55,6 @@ public class MapClickHandler implements EventHandler<MouseEvent> {
                 fermerShop(root, shopView);
             }
         }
-        return;
     }
 
     private void ouvrirShop(StackPane root, ImageView shopView) {

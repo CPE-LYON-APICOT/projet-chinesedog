@@ -1,3 +1,4 @@
+/*
 package com.example.chinesedog;
 
 import com.example.chinesedog.Model.*;
@@ -29,7 +30,9 @@ public class HelloApplication extends Application {
         for (int i = 0; i < 10; i++) {
             Ennemi ennemi = new EnnemiTerrestre(100, 10, 10, 10, "testTerrestrial", "C:\\Users\\Portal\\Desktop\\Cours\\POO\\Projet\\projet-chinesedog\\ChineseDog\\src\\main\\java\\com\\example\\chinesedog\\assets\\Enemy\\2\\Foozle_2DC0028_Spire_EnemyPack_2_Ground\\Ground\\Previews\\Scorpion.gif", false);
             Ennemi ennemivol = new EnnemiVolant(100, 10, 10, 10, "testennemivol", "C:\\Users\\Portal\\Desktop\\Cours\\POO\\Projet\\projet-chinesedog\\ChineseDog\\src\\main\\java\\com\\example\\chinesedog\\assets\\Enemy\\2\\Foozle_2DC0028_Spire_EnemyPack_2_Ground\\Ground\\Previews\\Scorpion.gif", false);
-/*            System.out.println(ennemi);*/
+*/
+/*            System.out.println(ennemi);*//*
+
             ennemis.add(ennemi);
             ennemis.add(ennemivol);
         }
@@ -52,7 +55,9 @@ public class HelloApplication extends Application {
                         "HCCCCCHHHH";
         Carte carte2 = new Carte(10, 10, test);
         Carte carteConverti = carte2.switchStringToCarte(test);
-/*        carteConverti.displayCarte();*/
+*/
+/*        carteConverti.displayCarte();*//*
+
 
         // Création d'une grille pour afficher les images
         GridPane gridPane = new GridPane();
@@ -80,4 +85,4 @@ public class HelloApplication extends Application {
     public static void main2(String[] args) {
         launch(args);
     }
-}
+}*/
