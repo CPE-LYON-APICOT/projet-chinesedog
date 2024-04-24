@@ -35,7 +35,9 @@ public class Carte {
     public List<List<Case>> getCases() {
         return cases;
     }
-
+    public Case getCase(int x, int y) {
+        return cases.get(x).get(y);
+    }
     public boolean displayCarte() {
         for (int i = 0; i < hauteur; i++) {
             for (int j = 0; j < largeur; j++) {

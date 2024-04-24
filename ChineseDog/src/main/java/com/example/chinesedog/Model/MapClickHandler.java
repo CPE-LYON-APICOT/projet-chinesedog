@@ -8,6 +8,7 @@ import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 
 public class MapClickHandler implements EventHandler<MouseEvent> {
+    private final Carte carteConvertie;
     private double imageX;
     private double imageY;
     private final int numRows;
@@ -18,7 +19,7 @@ public class MapClickHandler implements EventHandler<MouseEvent> {
     private final ImageView shopView;
     private final String mapSansEspace;
 
-    public MapClickHandler(double imageX, double imageY, int numRows, int numCols, double cellWidth, double cellHeight, StackPane root, ImageView shopView, String mapSansEspace) {
+    public MapClickHandler(double imageX, double imageY, int numRows, int numCols, double cellWidth, double cellHeight, StackPane root, ImageView shopView, String mapSansEspace, Carte carteConvertie) {
         this.imageX = imageX;
         this.imageY = imageY;
         this.numRows = numRows;
@@ -28,6 +29,7 @@ public class MapClickHandler implements EventHandler<MouseEvent> {
         this.root = root;
         this.shopView = shopView;
         this.mapSansEspace = mapSansEspace;
+        this.carteConvertie = carteConvertie;
     }
 
     @Override
@@ -47,7 +49,11 @@ public class MapClickHandler implements EventHandler<MouseEvent> {
 
         // Appeler les méthodes pour ouvrir ou fermer le magasin selon la case sélectionnée
         if (row >= 0 && row < numRows && col >= 0 && col < numCols) {
-            if (mapSansEspace.charAt(row * numCols + col) == 'T') {
+            Case selectedCase = carteConvertie.getCase(row, col);
+            // Récupérez la valeur de l'attribut isOccupied
+            boolean isOccupied = selectedCase.getIsOccupied();
+            System.out.println("La case sélectionnée est occupée ? : " + isOccupied);
+            if (mapSansEspace.charAt(row * numCols + col) == 'T' && !isOccupied) {
                 System.out.println("Ouverture du magasin");
                 ouvrirShop(root, shopView);
             } else {
@@ -59,10 +65,10 @@ public class MapClickHandler implements EventHandler<MouseEvent> {
 
     private void ouvrirShop(StackPane root, ImageView shopView) {
         TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(0.3), shopView);
-        translateTransition.setFromX(400); // Position initiale sur l'axe X (à droite)
-        translateTransition.setToX(260);    // Position finale sur l'axe X (au centre)
-        translateTransition.setFromY(50); // Position initiale sur l'axe X (à droite)
-        translateTransition.setToY(30);    // Position finale sur l'axe X (au centre)
+        translateTransition.setFromX(400);
+        translateTransition.setToX(260);
+        translateTransition.setFromY(50);
+        translateTransition.setToY(30);
         translateTransition.play();
         shopView.setVisible(true);
 

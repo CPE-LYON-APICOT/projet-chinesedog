@@ -2,14 +2,18 @@ package com.example.chinesedog.Model;
 
 public abstract class Tour {
     protected String nom;
+    protected int row;
+    protected int col;
     protected int niveau;
     protected double prix;
     protected double vitesseAttaque;
     protected double portee;
     protected double degats;
 
-    public Tour(String nom, int niveau, double prix, double vitesseAttaque, double portee, double degats) {
+    public Tour(String nom, int row, int col, int niveau, double prix, double vitesseAttaque, double portee, double degats) {
         this.nom = nom;
+        this.row = row;
+        this.col = col;
         this.niveau = niveau;
         this.prix = prix;
         this.vitesseAttaque = vitesseAttaque;
@@ -19,6 +23,12 @@ public abstract class Tour {
 
     public String getNom() {
         return nom;
+    }
+    public int getRow() {
+        return row;
+    }
+    public int getCol() {
+        return col;
     }
     public int getNiveau() {
         return niveau;
@@ -43,7 +53,12 @@ public abstract class Tour {
     public void setNom(String nom) {
         this.nom = nom;
     }
-
+    public void setRow(int row) {
+        this.row = row;
+    }
+    public void setCol(int col) {
+        this.col = col;
+    }
     public void setNiveau(int niveau) {
         this.niveau = niveau;
     }

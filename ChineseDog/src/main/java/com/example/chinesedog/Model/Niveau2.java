@@ -8,7 +8,7 @@ public class Niveau2 extends DecoratorTour {
 
     @Override
     public String getDescription() {
-        String description = "Niveau du" + tour.getNom() + "UP ! \n";
+        String description = "Niveau du " + tour.getNom() + " UP ! \n";
         description += "Niveau : " + (tour.getNiveau() + 1) + "\n";
         description += "Prix : " + tour.getPrix() + "\n";
         description += "Vitesse d'attaque : " + tour.getVitesseAttaque() + "\n";

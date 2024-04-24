@@ -31,8 +31,8 @@ public class test extends Application {
         int numRows = 10; // Nombre de lignes dans votre carte
         int numCols = 10; // Nombre de colonnes dans votre carte
 
-        String map = "HHHHHCHHTH HHHHTCCCCH HHHHHHHTCH HTHHTHHHCH HCCCCHHHCH HCHTCHHHCT HCHCCHHHCH TCHCHHHTCH HCHCCCCCCH HCHHTHHHHH";
-        String mapSansEspace = "HHHHHCHHTHHHHHTCCCCHHHHHHHHTCHHTHHTHHHCHHCCCCHHHCHHCHTCHHHCTHCHCCHHHCHTCHCHHHTCHHCHCCCCCCHHCHHTHHHHH";
+        String map = "HHHHHCHTHH HHHHTCCCCH HHHHHHHTCH HTHHTHHHCH HCCCCHHHCT HCHTCHHHCH HCHCCHHHCH TCHCHHHTCH HCHCCCCCCH HCHHTHHHHH";
+        String mapSansEspace = "HHHHHCHTHHHHHHTCCCCHHHHHHHHTCHHTHHTHHHCHHCCCCHHHCTHCHTCHHHCHHCHCCHHHCHTCHCHHHTCHHCHCCCCCCHHCHHTHHHHH";
         Carte carte = new Carte(numRows, numCols, map, mapSansEspace);
         List<List<Case>> cases = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
@@ -57,10 +57,18 @@ public class test extends Application {
         Vague vague = new Vague(10, 1, 1, ennemis);
         vague.displayVague();
 
-        Tour canon = new Canon("Canon", 1, 50, 10, 3, 10);
-        System.out.println("Description = \n" + canon.getDescription());
-        canon = new Niveau2(canon);
-        System.out.println("\n\nDescription = \n" + canon.getDescription());
+/*        List<Tour> toursEnJeu = new ArrayList<>();
+        Tour canonVert = new Canon("Canon Vert",-1,-1,1, 50, 10, 3, 10);
+        Tour canonJaune = new Canon("Canon Jaune",-1,-1,1, 100, 10, 5, 8.5);
+        Tour canonRouge = new Canon("Canon Rouge",-1,-1,1, 225, 8, 3, 25);
+        List<Tour> tours = new ArrayList<>();
+        tours.add(canonVert);
+        tours.add(canonJaune);
+        tours.add(canonRouge);
+
+        System.out.println("Description = \n" + canonVert.getDescription());
+        canonVert = new Niveau2(canonVert);
+        System.out.println("\n\nDescription = \n" + canonVert.getDescription());*/
 
         // Créer une nouvelle image avec une largeur et une hauteur suffisamment grandes pour contenir les deux images
         int combinedWidth = herbe.getWidth() * numRows;
@@ -103,6 +111,7 @@ public class test extends Application {
         // Créer un ImageView pour afficher l'image
         ImageView imageView = new ImageView(fxImage);
 
+
         // Créer une pile (StackPane) pour contenir l'ImageView
         StackPane root = new StackPane();
         Scene scene = new Scene(root, combinedWidth, combinedHeight);
@@ -110,11 +119,10 @@ public class test extends Application {
         ImageView shopView = new ImageView(new Image("file:///" + currentPath + "/src/main/resources/com/example/chinesedog/assets/shop/side.png"));
 
         // Créer une instance de MapClickHandler
-        MapClickHandler clickHandler = new MapClickHandler(0,0, numRows, numCols, herbe.getWidth(), herbe.getHeight(), root, shopView, mapSansEspace);
+        MapClickHandler clickHandler = new MapClickHandler(0,0, numRows, numCols, herbe.getWidth(), herbe.getHeight(), root, shopView, mapSansEspace, carteConverti);
         scene.setOnMouseClicked(clickHandler);
 
-        createShopView(root, createItemsShop(currentPath, root, clickHandler.getImageX(), clickHandler.getImageY(), clickHandler), shopView);
-
+        createShopView(root, createItemsShop(currentPath, root, clickHandler.getImageX(), clickHandler.getImageY(), clickHandler, carteConverti), shopView);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Image combinée");
 
@@ -129,9 +137,13 @@ public class test extends Application {
         root.getChildren().addAll(shopView, itemViews[0], itemViews[1], itemViews[2]);
     }
 
-    private ImageView[] createItemsShop(String currentPath, StackPane root, Double imageX, Double imageY, MapClickHandler clickHandler) {
-        Image canon1 = new Image("file:///" + currentPath + "/src/main/resources/com/example/chinesedog/assets/Tower/5/tower_2.png");
-        Image canon2 = new Image("file:///" + currentPath + "/src/main/resources/com/example/chinesedog/assets/Tower/5/tower_1.png");
+    private ImageView[] createItemsShop(String currentPath, StackPane root, Double imageX, Double imageY, MapClickHandler clickHandler, Carte map) {
+        Tour canonVert = new Canon("Canon Vert",-1,-1,1, 50, 10, 3, 10);
+        Tour canonJaune = new Canon("Canon Jaune",-1,-1,1, 100, 10, 5, 8.5);
+        Tour canonRouge = new Canon("Canon Rouge",-1,-1,1, 225, 8, 3, 25);
+
+        Image canon1 = new Image("file:///" + currentPath + "/src/main/resources/com/example/chinesedog/assets/Tower/5/tower_1.png");
+        Image canon2 = new Image("file:///" + currentPath + "/src/main/resources/com/example/chinesedog/assets/Tower/5/tower_2.png");
         Image canon3 = new Image("file:///" + currentPath + "/src/main/resources/com/example/chinesedog/assets/Tower/5/tower_3.png");
 
         ImageView canon1View = new ImageView(canon1);
@@ -139,25 +151,26 @@ public class test extends Application {
         ImageView canon3View = new ImageView(canon3);
         System.out.println("imageX = " + imageX);
         System.out.println("imageY = " + imageY);
-        canon1View.setTranslateX(295);
+
+        canon1View.setTranslateX(230);
         canon1View.setTranslateY(-265);
         canon1View.setVisible(false);
         canon1View.setOnMouseClicked(event -> {
             System.out.println("Clic sur l'élément du magasin 1 !");
             System.out.println("imageX = " + imageX);
             System.out.println("imageY = " + imageY);
-            buyTower(canon1View, root, clickHandler.getImageX(), clickHandler.getImageY());
+            buyTower(canon1View, root, clickHandler.getImageX(), clickHandler.getImageY(), canonVert, map);
             event.consume();
         });
 
-        canon2View.setTranslateX(230);
+        canon2View.setTranslateX(295);
         canon2View.setTranslateY(-265);
         canon2View.setVisible(false);
         canon2View.setOnMouseClicked(event -> {
             System.out.println("Clic sur l'élément du magasin 2 !");
             System.out.println("imageX = " + imageX);
             System.out.println("imageY = " + imageY);
-            buyTower(canon2View, root, clickHandler.getImageX(), clickHandler.getImageY());
+            buyTower(canon2View, root, clickHandler.getImageX(), clickHandler.getImageY(), canonJaune, map);
             event.consume();
         });
 
@@ -168,7 +181,7 @@ public class test extends Application {
             System.out.println("Clic sur l'élément du magasin 3 !");
             System.out.println("imageX = " + imageX);
             System.out.println("imageY = " + imageY);
-            buyTower(canon3View, root, clickHandler.getImageX(), clickHandler.getImageY());
+            buyTower(canon3View, root, clickHandler.getImageX(), clickHandler.getImageY(), canonRouge, map);
             event.consume();
         });
 
@@ -176,13 +189,19 @@ public class test extends Application {
 
     }
 
-    private void buyTower(ImageView achat, StackPane root, double imageX, double imageY) {
+    private void buyTower(ImageView achat, StackPane root, double imageX, double imageY, Tour tour, Carte map) {
         ImageView imageView = new ImageView(achat.getImage());
         System.out.println("Achat d'une tour !");
         imageView.setTranslateY(imageX - 352);
         imageView.setTranslateX(imageY - 352);
-        System.out.println("Position de la tour : " + imageX + ", " + imageY);
+        tour.setRow(((int) imageX / 64) - 1);
+        tour.setCol(((int) imageY / 64) - 1);
+        map.getCase(tour.getRow(), tour.getCol()).setIsOccupied(true);
         imageView.setVisible(true);
+        imageView.setOnMouseClicked(event -> {
+            System.out.println("Clic sur " + tour.getNom() + "!\n" + tour.getDescription());
+            event.consume();
+        });
         fermerShop(root);
         root.getChildren().add(imageView);
     }
