@@ -14,8 +14,8 @@ public class Canon extends Tour {
         description += "Niveau : " + getNiveau() + "\n";
         description += "Prix : " + getPrix() + "\n";
         description += "Vitesse d'attaque : " + getVitesseAttaque() + "\n";
-        description += "Portee : " + getPortee() + "\n";
-        description += "Degats : " + getDegats() + "\n";
+        description += "Portée : " + getPortee() + "\n";
+        description += "Dégats : " + getDegats() + "\n";
         return description;
     }
 }

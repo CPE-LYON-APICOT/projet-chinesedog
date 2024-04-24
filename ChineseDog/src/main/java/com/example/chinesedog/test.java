@@ -3,6 +3,7 @@ package com.example.chinesedog;
 import com.example.chinesedog.Model.*;
 import javafx.application.Application;
 import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -18,6 +19,14 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.imageio.ImageIO;
 
+import javafx.scene.control.Button;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
+import javafx.geometry.Insets;
+
 public class test extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
@@ -31,8 +40,8 @@ public class test extends Application {
         int numRows = 10; // Nombre de lignes dans votre carte
         int numCols = 10; // Nombre de colonnes dans votre carte
 
-        String map = "HHHHHCHTHH HHHHTCCCCH HHHHHHHTCH HTHHTHHHCH HCCCCHHHCT HCHTCHHHCH HCHCCHHHCH TCHCHHHTCH HCHCCCCCCH HCHHTHHHHH";
-        String mapSansEspace = "HHHHHCHTHHHHHHTCCCCHHHHHHHHTCHHTHHTHHHCHHCCCCHHHCTHCHTCHHHCHHCHCCHHHCHTCHCHHHTCHHCHCCCCCCHHCHHTHHHHH";
+        String map = "HHHHHCHTHH HHHHTCCCCH HHHHHHHTCH HHHHTHHHCH TCCCCHHHCT HCHTCHHHCH HCHCCHHHCH TCHCHHHTCH HCHCCCCCCH HCHHTHHHHH";
+        String mapSansEspace = "HHHHHCHTHHHHHHTCCCCHHHHHHHHTCHHHHHTHHHCHTCCCCHHHCTHCHTCHHHCHHCHCCHHHCHTCHCHHHTCHHCHCCCCCCHHCHHTHHHHH";
         Carte carte = new Carte(numRows, numCols, map, mapSansEspace);
         List<List<Case>> cases = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
@@ -111,10 +120,10 @@ public class test extends Application {
         // Créer un ImageView pour afficher l'image
         ImageView imageView = new ImageView(fxImage);
 
-
         // Créer une pile (StackPane) pour contenir l'ImageView
         StackPane root = new StackPane();
         Scene scene = new Scene(root, combinedWidth, combinedHeight);
+
         root.getChildren().add(imageView);
         ImageView shopView = new ImageView(new Image("file:///" + currentPath + "/src/main/resources/com/example/chinesedog/assets/shop/side.png"));
 
@@ -123,9 +132,25 @@ public class test extends Application {
         scene.setOnMouseClicked(clickHandler);
 
         createShopView(root, createItemsShop(currentPath, root, clickHandler.getImageX(), clickHandler.getImageY(), clickHandler, carteConverti), shopView);
-        primaryStage.setScene(scene);
-        primaryStage.setTitle("Image combinée");
+        // Création d'un rectangle blanc
+        Rectangle rectangle = new Rectangle(200, 250, Color.WHITE);
+        rectangle.setStroke(Color.BLACK); // Ajout d'une bordure noire
 
+        // Création d'un texte à afficher
+        Text text = new Text();
+        text.setFont(Font.font("Arial", FontWeight.BOLD, 14));
+        text.setFill(Color.BLACK);
+
+        // Création d'un bouton
+        Button button = new Button("Upgrade");
+        button.setVisible(false);
+        StackPane.setAlignment(rectangle, javafx.geometry.Pos.TOP_LEFT);
+        StackPane.setAlignment(text, javafx.geometry.Pos.TOP_LEFT);
+        StackPane.setAlignment(button, javafx.geometry.Pos.TOP_LEFT);
+        StackPane.setMargin(button, new Insets(210, 0, 0, 60));
+        root.getChildren().addAll(rectangle, text, button);
+        primaryStage.setScene(scene);
+        primaryStage.setTitle("Tower Defense");
         primaryStage.show();
     }
 
@@ -200,6 +225,18 @@ public class test extends Application {
         imageView.setVisible(true);
         imageView.setOnMouseClicked(event -> {
             System.out.println("Clic sur " + tour.getNom() + "!\n" + tour.getDescription());
+
+            for (Node node : root.getChildren()) {
+                if (node instanceof Text) {
+                    Text text = (Text) node;
+                    text.setText(tour.getDescription());
+                    System.out.println("Text trouvé: " + text.getText());
+                }
+                else if (node instanceof Button) {
+                    Button button = (Button) node;
+                    button.setVisible(true);
+                }
+            }
             event.consume();
         });
         fermerShop(root);

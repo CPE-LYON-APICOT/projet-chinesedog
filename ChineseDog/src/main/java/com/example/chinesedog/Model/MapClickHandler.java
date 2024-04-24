@@ -2,9 +2,12 @@ package com.example.chinesedog.Model;
 
 import javafx.animation.TranslateTransition;
 import javafx.event.EventHandler;
+import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
+import javafx.scene.text.Text;
 import javafx.util.Duration;
 
 public class MapClickHandler implements EventHandler<MouseEvent> {
@@ -58,6 +61,18 @@ public class MapClickHandler implements EventHandler<MouseEvent> {
                 ouvrirShop(root, shopView);
             } else {
                 System.out.println("Fermeture du magasin");
+
+                for (Node node : root.getChildren()) {
+                    if (node instanceof Text) {
+                        Text text = (Text) node;
+                        text.setText("");
+                    }
+                    else if (node instanceof Button) {
+                        Button button = (Button) node;
+                        button.setVisible(false);
+                    }
+                }
+
                 fermerShop(root, shopView);
             }
         }
