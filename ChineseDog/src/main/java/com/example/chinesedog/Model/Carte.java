@@ -13,18 +13,14 @@ public class Carte {
     private int largeur;
     private List<List<Case>> cases;
 
-    public Carte(int hauteur, int largeur, List<List<Case>> cases) {
-        this.largeur = largeur;
-        this.hauteur = hauteur;
-        this.cases = cases;
+    public Carte(CarteBuilder builder) {
+        this.hauteur = builder.hauteur;
+        this.largeur = builder.largeur;
+        this.carteString = builder.carteString;
+        this.carteStringSansEspace = builder.carteStringSansEspace;
+        this.cases = builder.cases;
     }
 
-    public Carte(int hauteur, int largeur, String carteString, String carteStringSansEspace) {
-        this.largeur = largeur;
-        this.hauteur = hauteur;
-        this.carteString = carteString;
-        this.carteStringSansEspace = carteStringSansEspace;
-    }
 
     public int gethauteur() {
         return hauteur;
@@ -59,7 +55,7 @@ public class Carte {
             }
             cases.add(ligne);
         }
-        return new Carte(hauteur, largeur, cases);
+        return new CarteBuilder(hauteur, largeur).setCarteString(carte).setCases(cases).build();
     }
 
     public int getHauteur() {

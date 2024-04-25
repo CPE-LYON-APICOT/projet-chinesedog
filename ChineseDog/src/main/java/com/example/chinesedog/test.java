@@ -42,7 +42,7 @@ public class test extends Application {
 
         String map = "HHHHHCHTHH HHHHTCCCCH HHHHHHHTCH HHHHTHHHCH TCCCCHHHCT HCHTCHHHCH HCHCCHHHCH TCHCHHHTCH HCHCCCCCCH HCHHTHHHHH";
         String mapSansEspace = "HHHHHCHTHHHHHHTCCCCHHHHHHHHTCHHHHHTHHHCHTCCCCHHHCTHCHTCHHHCHHCHCCHHHCHTCHCHHHTCHHCHCCCCCCHHCHHTHHHHH";
-        Carte carte = new Carte(numRows, numCols, map, mapSansEspace);
+        Carte carte = new CarteBuilder(numRows, numCols).setCarteString(map).setCarteStringSansEspace(mapSansEspace).build();
 
         Carte carteConverti = carte.switchStringToCarte(mapSansEspace);
         carteConverti.displayCarte();
