@@ -1,16 +1,17 @@
 package com.example.chinesedog.Model;
 
-public class Niveau2 extends DecoratorTour {
+public class Niveau3 extends DecoratorTour {
 
-    public Niveau2(Tour tour) {
+    public Niveau3(Tour tour) {
         super(tour);
         setNouveauxAttributs();
     }
 
     private void setNouveauxAttributs() {
-        int nouveauxDegats = (int) (tour.getDegats() * 1.2); // Augmentation de 20%
+        int nouveauxDegats = (int) (tour.getDegats() * 1.5); // Augmentation de 20%
         tour.setDegats(nouveauxDegats);
         tour.setNiveau(tour.getNiveau() + 1);
+        tour.setVitesseAttaque(tour.getVitesseAttaque() + 2);
     }
 
     @Override

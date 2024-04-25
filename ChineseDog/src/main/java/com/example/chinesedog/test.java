@@ -66,19 +66,6 @@ public class test extends Application {
         Vague vague = new Vague(10, 1, 1, ennemis);
         vague.displayVague();
 
-/*        List<Tour> toursEnJeu = new ArrayList<>();
-        Tour canonVert = new Canon("Canon Vert",-1,-1,1, 50, 10, 3, 10);
-        Tour canonJaune = new Canon("Canon Jaune",-1,-1,1, 100, 10, 5, 8.5);
-        Tour canonRouge = new Canon("Canon Rouge",-1,-1,1, 225, 8, 3, 25);
-        List<Tour> tours = new ArrayList<>();
-        tours.add(canonVert);
-        tours.add(canonJaune);
-        tours.add(canonRouge);
-
-        System.out.println("Description = \n" + canonVert.getDescription());
-        canonVert = new Niveau2(canonVert);
-        System.out.println("\n\nDescription = \n" + canonVert.getDescription());*/
-
         // Créer une nouvelle image avec une largeur et une hauteur suffisamment grandes pour contenir les deux images
         int combinedWidth = herbe.getWidth() * numRows;
         int combinedHeight = herbe.getHeight() * numCols;
@@ -223,20 +210,12 @@ public class test extends Application {
         tour.setCol(((int) imageY / 64) - 1);
         map.getCase(tour.getRow(), tour.getCol()).setIsOccupied(true);
         imageView.setVisible(true);
+        updateText(root, tour);
+
         imageView.setOnMouseClicked(event -> {
             System.out.println("Clic sur " + tour.getNom() + "!\n" + tour.getDescription());
-
-            for (Node node : root.getChildren()) {
-                if (node instanceof Text) {
-                    Text text = (Text) node;
-                    text.setText(tour.getDescription());
-                    System.out.println("Text trouvé: " + text.getText());
-                }
-                else if (node instanceof Button) {
-                    Button button = (Button) node;
-                    button.setVisible(true);
-                }
-            }
+            updateText(root, tour);
+            System.out.println(tour.getDescription());
             event.consume();
         });
         fermerShop(root);
@@ -252,5 +231,18 @@ public class test extends Application {
 
     public static void main(String[] args) {
         launch(args);
+    }
+
+    public void updateText(StackPane root, Tour tour) {
+        for (Node node : root.getChildren()) {
+            if (node instanceof Text text) {
+                text.setText(tour.getDescription());
+            }
+            else if (node instanceof Button button) {
+                button.setVisible(true);
+                ButtonClickHandler buttonClickHandler = new ButtonClickHandler(tour, root);
+                button.setOnAction(buttonClickHandler);
+            }
+        }
     }
 }

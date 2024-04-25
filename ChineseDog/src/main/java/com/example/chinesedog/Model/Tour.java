@@ -79,4 +79,15 @@ public abstract class Tour {
         this.degats = degats;
     }
     public abstract String getDescription();
+
+    public void setTour(Tour tour) {
+        this.nom = tour.getNom();
+        this.row = tour.getRow();
+        this.col = tour.getCol();
+        this.niveau = tour.getNiveau();
+        this.prix = tour.getPrix();
+        this.vitesseAttaque = tour.getVitesseAttaque();
+        this.portee = tour.getPortee();
+        this.degats = tour.getDegats();
+    }
 }
