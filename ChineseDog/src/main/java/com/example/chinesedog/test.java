@@ -43,15 +43,6 @@ public class test extends Application {
         String map = "HHHHHCHTHH HHHHTCCCCH HHHHHHHTCH HHHHTHHHCH TCCCCHHHCT HCHTCHHHCH HCHCCHHHCH TCHCHHHTCH HCHCCCCCCH HCHHTHHHHH";
         String mapSansEspace = "HHHHHCHTHHHHHHTCCCCHHHHHHHHTCHHHHHTHHHCHTCCCCHHHCTHCHTCHHHCHHCHCCHHHCHTCHCHHHTCHHCHCCCCCCHHCHHTHHHHH";
         Carte carte = new Carte(numRows, numCols, map, mapSansEspace);
-        List<List<Case>> cases = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            List<Case> ligne = new ArrayList<>();
-            for (int j = 0; j < 10; j++) {
-                ligne.add(new Case(i, j, TypeCase.valueOf(String.valueOf(mapSansEspace.charAt(i * 10 + j))), false));
-                System.out.print(ligne.get(j).getType());
-            }
-            cases.add(ligne);
-        }
 
         Carte carteConverti = carte.switchStringToCarte(mapSansEspace);
         carteConverti.displayCarte();
@@ -213,9 +204,7 @@ public class test extends Application {
         updateText(root, tour);
 
         imageView.setOnMouseClicked(event -> {
-            System.out.println("Clic sur " + tour.getNom() + "!\n" + tour.getDescription());
             updateText(root, tour);
-            System.out.println(tour.getDescription());
             event.consume();
         });
         fermerShop(root);

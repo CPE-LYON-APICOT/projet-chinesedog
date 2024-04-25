@@ -26,12 +26,11 @@ public class ButtonClickHandler implements EventHandler<ActionEvent> {
     private void upgradeTower(Tour tour) {
         System.out.println("Niveau de la tour : " + tour.getNiveau());
         if (tour.getNiveau() == 1) {
-            tour = new Niveau2(tour);
-            tour.getDescription();
+            new Niveau2(tour);
             System.out.println("La tour a été mise à niveau 2 avec succès !");
         }
         else if (tour.getNiveau() == 2) {
-            tour = new Niveau3(tour);
+            new Niveau3(tour);
             System.out.println("La tour a été mise à niveau 3 avec succès !");
         }
         else {
@@ -42,8 +41,8 @@ public class ButtonClickHandler implements EventHandler<ActionEvent> {
     private void updateText() {
         for (Node node : root.getChildren()) {
             if (node instanceof Text text) {
-                text.setText(tour.getDescription()); // Mettre à jour le texte avec la nouvelle description de la tour
-                break; // Arrêter la boucle une fois que le texte est mis à jour
+                text.setText(tour.getDescription());
+                break;
             }
         }
     }
