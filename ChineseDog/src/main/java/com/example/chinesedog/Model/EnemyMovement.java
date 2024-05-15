@@ -4,9 +4,7 @@ import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
-import javafx.geometry.Bounds;
 import javafx.scene.Scene;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -15,9 +13,7 @@ import javafx.util.Duration;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Random;
-import javafx.scene.image.Image;
 
 
 public class EnemyMovement extends Application {
@@ -65,7 +61,8 @@ public class EnemyMovement extends Application {
         double targetX = Double.parseDouble(parts[0]);
         double targetY = Double.parseDouble(parts[1]);
         for (int i = 0; i < vague.getNombreEnnemis(); i++) {
-            Enemy enemy = new EnnemiVolant(waypoints, 100, 1, 1, 1);
+            EnemyFactory VolantFactory = new EnemyVolantFactory();
+            Enemy enemy = VolantFactory.createEnemy(waypoints, 100, 1, 1, 1);
             enemy.setPane(new Rectangle());
             enemy.getPane().setWidth(ENEMY_WIDTH);
             enemy.getPane().setHeight(ENEMY_HEIGHT);
@@ -80,6 +77,7 @@ public class EnemyMovement extends Application {
             enemies.add(enemy);
             root.getChildren().add(enemy.getPane());
         }
+
     }
 
     private List<String> generatesWaypoints(){
