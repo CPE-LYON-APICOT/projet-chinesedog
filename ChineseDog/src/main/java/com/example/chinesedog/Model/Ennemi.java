@@ -1,45 +1,45 @@
 package com.example.chinesedog.Model;
 
-abstract public class Ennemi {
+import javafx.scene.layout.Pane;
 
-    private String nom;
-    private int vie;
-    private int vitesse;
-    private int armure;
-    private int resistanceMagique;
-    private String imagePath;
+import java.util.List;
 
-    public Ennemi(int vie, int vitesse, int armure, int resistanceMagique, String nom, String imagePath) {
-        this.vie = vie;
-        this.vitesse = vitesse;
-        this.armure = armure;
-        this.resistanceMagique = resistanceMagique;
-        this.nom = nom;
-        this.imagePath = imagePath;
+public class Ennemi {
+    private List<String> waypoints;
+    private Pane pane;
+    private int currentWaypointIndex = 0;
+
+    public List<String> getWaypoints() {
+        return waypoints;
     }
 
-    public int getVie() {
-        return vie;
+    public void setWaypoints(List<String> waypoints) {
+        this.waypoints = waypoints;
     }
 
-    public int getVitesse() {
-        return vitesse;
+    public Pane getPane() {
+        return pane;
     }
 
-    public int getArmure() {
-        return armure;
+    public void setPane(Pane pane) {
+        this.pane = pane;
     }
 
-    public int getResistanceMagique() {
-        return resistanceMagique;
+    public String getNextWaypoint() {
+        if (currentWaypointIndex >= waypoints.size()) {
+            currentWaypointIndex = waypoints.size() - 1;
+        }
+
+        return waypoints.get(currentWaypointIndex);
     }
 
-    public String getNom() {
-        return nom;
+    public int getCurrentWaypointIndex() {
+        return currentWaypointIndex;
     }
 
-    public String getImagePath() {
-        return imagePath;
+    public void setCurrentWaypointIndex(int currentWaypointIndex) {
+        this.currentWaypointIndex = currentWaypointIndex;
     }
+
 
 }

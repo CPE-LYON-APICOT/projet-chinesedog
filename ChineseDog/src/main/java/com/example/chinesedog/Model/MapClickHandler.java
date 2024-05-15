@@ -63,12 +63,10 @@ public class MapClickHandler implements EventHandler<MouseEvent> {
                 System.out.println("Fermeture du magasin");
 
                 for (Node node : root.getChildren()) {
-                    if (node instanceof Text) {
-                        Text text = (Text) node;
+                    if (node instanceof Text text) {
                         text.setText("");
                     }
-                    else if (node instanceof Button) {
-                        Button button = (Button) node;
+                    else if (node instanceof Button button) {
                         button.setVisible(false);
                     }
                 }
@@ -88,12 +86,14 @@ public class MapClickHandler implements EventHandler<MouseEvent> {
         shopView.setVisible(true);
 
         // Parcourir les enfants du StackPane
-        for (int i = 0; i < root.getChildren().size(); i++) {
-            ImageView imageView = (ImageView) root.getChildren().get(i);
-            if (!imageView.isVisible()) {
-                imageView.setVisible(true);
+        for (Node node : root.getChildren()) {
+            if (node instanceof ImageView imageView) {
+                if (!imageView.isVisible()) {
+                    imageView.setVisible(true);
+                }
             }
         }
+
     }
 
     private void fermerShop(StackPane root, ImageView shopView) {

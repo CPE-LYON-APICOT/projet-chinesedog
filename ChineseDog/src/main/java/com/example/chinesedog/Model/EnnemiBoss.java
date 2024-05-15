@@ -1,3 +1,4 @@
+/*
 package com.example.chinesedog.Model;
 
 import com.example.chinesedog.attaquer;
@@ -24,3 +25,4 @@ public class EnnemiBoss extends Ennemi implements attaquer {
         return peutAttaquerVolant;
     }
 }
+*/

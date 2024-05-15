@@ -1,8 +1,8 @@
 
 # Retro-conception
 
-**Binome 1 : [Nom Prénom]**
-**Binome 2 : [Nom Prénom]**
+**Binome 1 : PORTAL Thierry**
+**Binome 2 : HUBERT Eliott**
 
 Complétez ce document pour décrire votre projet, les difficultés rencontrées, les design patterns mis en oeuvre, les améliorations possibles, et en quoi la POO vous a été utile.
 
@@ -28,11 +28,12 @@ Dans ces documents, il ne s'agit pas de cacher la poussière sous le tapis, il f
 
 ## Objectif du projet
 
-[Décrivez ici l'objectif initial du projet, ne cherchez pas à le minorer si vous n'avez pas tout fini, décrivez ce que vous avez voulu faire]
+Notre projet consiste en un jeu de tower defense où les joueurs doivent défendre leur terre contre des vagues d'ennemis en construisant et en améliorant diverses tours de défense. Le jeu est composé d'une carte sur laquelle certaines cases sont réservées à la construction de tour avec de l'argent gagné en tuant des ennemis. Les ennemis apparaissent à un endroit de la carte et se dirigent vers un autre endroit. Si un ennemi atteint cet autre endroit, le joueur perd de la vie.
+Dans l'idéal, le jeu devrait proposer plusieurs types de tours, plusieurs types d'ennemis, et plusieurs cartes.
 
 ## Résultat
 
-[Avez vous atteint votre objectif ?]
+Aujourd'hui notre jeu affiche une carte avec des cases réservées à la construction de tours. Nous sommes capables de construire des tours ainsi que de les améliorer. Les ennemis apparaissent à un endroit de la carte et se dirigent vers un autre endroit. Nous avons également implémenté un système de vague d'ennemis encore incomplet. 
 
 ### Améliorations possibles
 
@@ -63,28 +64,36 @@ Dans ces documents, il ne s'agit pas de cacher la poussière sous le tapis, il f
 
 ### *Design Patterns* mis en oeuvre
 
-#### 1. [Factory]
-[Décrivez ici brièvement le design pattern utilisé et pourquoi]
-[Ajouter éventuellement des exemples de code pour montrer l'élégence de votre solution, pour cela vous pouvez écrire en Markdown votre code ainsi :
+#### 1. [Builder]
 
 <pre>
-```java
-public class Factory {
-    public static Object createObject(String type) {
-        if (type.equals("type1")) {
-            return new Type1();
-        } else if (type.equals("type2")) {
-            return new Type2();
-        }
-        return null;
-    }
-}
-```
 </pre>
 
-]
-
 ---
+
+#### 2. [Decorator]
+
+Le decorator nous a permis d'implémenter facilement notre système de mise à niveau des tours. Cela nous permet de maintenir le code facilement.
+Les niveaux permettent d'ajouter de nouveaux comportements à la tour sans modifier le code existant. Notre code reste ouvert à l'extension car il suffit de rajouter une classe
+niveauX pour ajouter un nouveau comportement à la tour.
+
+<pre>
+private void upgradeTower(Tour tour) {
+        System.out.println("Niveau de la tour : " + tour.getNiveau());
+        if (tour.getNiveau() == 1) {
+            new Niveau2(tour);
+            System.out.println("La tour a été mise à niveau 2 avec succès !");
+        }
+        else if (tour.getNiveau() == 2) {
+            new Niveau3(tour);
+            System.out.println("La tour a été mise à niveau 3 avec succès !");
+        }
+        else {
+            System.out.println("La tour est déjà au niveau maximum.");
+        }
+    }
+</pre>
+
 # Partie pédagogique
 
 
