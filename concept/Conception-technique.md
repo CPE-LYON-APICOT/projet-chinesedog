@@ -33,13 +33,13 @@ Dans l'idéal, le jeu devrait proposer plusieurs types de tours, plusieurs types
 
 ## Résultat
 
-Aujourd'hui notre jeu affiche une carte avec des cases réservées à la construction de tours. Nous sommes capables de construire des tours ainsi que de les améliorer. Les ennemis apparaissent à un endroit de la carte et se dirigent vers un autre endroit. Nous avons également implémenté un système de vague d'ennemis encore incomplet. 
+Aujourd'hui notre jeu affiche une carte avec des cases réservées à la construction de tours. Nous sommes capables de construire des tours ainsi que de les améliorer. Les ennemis apparaissent à un endroit de la carte et se dirigent vers un autre endroit. Nous avons également implémenté un système de vague d'ennemis encore incomplet. Cependant il nous est 
+encore pas possible de tuer des ennemis ainsi que de gagner ou de perdre la partie.
 
 ### Améliorations possibles
 
-[Décrivez ici les améliorations que vous auriez pu apporter si vous aviez eu plus de temps]
+Nous aurrions aimé implémenter le système pour tuer les ennemis car cela nous aurait permi d'avoir un début de vrai gameplay.
 
----
 # Partie "Développeur" (plus technique) :
 
 

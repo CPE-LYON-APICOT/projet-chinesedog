@@ -102,6 +102,8 @@ public class test extends Application {
         // Créer un ImageView pour afficher l'image
         ImageView imageView = new ImageView(fxImage);
 
+        List<Tour> tours = new ArrayList<>();
+
         // Créer une pile (StackPane) pour contenir l'ImageView
         StackPane root = new StackPane();
         Scene scene = new Scene(root, combinedWidth, combinedHeight);
@@ -132,7 +134,7 @@ public class test extends Application {
         StackPane.setMargin(button, new Insets(210, 0, 0, 60));
         root.getChildren().addAll(rectangle, text, button);
 
-        EnemyMovement enemyMovement = new EnemyMovement();
+        EnemyMovement enemyMovement = new EnemyMovement(tours);
 
         enemyMovement.spawnEnemies(root);
 

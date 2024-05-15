@@ -1,5 +1,8 @@
 package com.example.chinesedog.Model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public abstract class Tour {
     protected String nom;
     protected int row;
@@ -48,6 +51,12 @@ public abstract class Tour {
 
     public double getDegats() {
         return degats;
+    }
+    public List<Integer> getCoordonnees() {
+        List<Integer> coordonnees = new ArrayList<>();
+        coordonnees.add(row);
+        coordonnees.add(col);
+        return coordonnees;
     }
 
     public void setNom(String nom) {

@@ -27,10 +27,14 @@ public class EnemyMovement extends Application {
     private static final int ENEMY_WIDTH = 20;
     private static final int ENEMY_HEIGHT = 20;
     private static final int ENEMY_SPEED = 1;
-
+    public List<Tour> towers = new ArrayList<>();
     private List<Enemy> enemies = new ArrayList<>();
     private Vague vague;
     String map = "HHHHHC30HHTHHHHHTC29C28C27C26HHHHHHHHTC25HHTHHTHHHC24HHC06C07C08C09HHHC23HHC05HTC10HHHC22THC04HC12C11HHHC21HTC03HC13HHHTC20HHC02HC14C15C16C17C18C19HHC01HHTHHHHH";
+
+    public EnemyMovement(List<Tour> towers) {
+        this.towers = towers;
+    }
     @Override
     public void start(Stage primaryStage) throws InterruptedException {
         Pane root = new Pane();
@@ -80,6 +84,27 @@ public class EnemyMovement extends Application {
             enemies.add(enemy);
             root.getChildren().add(enemy.getPane());
         }
+    }
+
+    public void checkAndAttackEnemies(Ennemi ennemi) {
+        for (Tour tour : towers) {
+            List<Integer> coorTour = tour.getCoordonnees();
+            List<Integer> coorEnnemi = getCoordonnees(ennemi);
+            int distance = Math.abs(coorTour.get(0) - coorEnnemi.get(0)) + Math.abs(coorTour.get(1) - coorEnnemi.get(1));
+            if (distance <= tour.getPortee()) {
+                ennemi.setVie(ennemi.getVie() - tour.getDegats());
+                if (ennemi.getVie() <= 0) {
+                    ennemi.getPane().setVisible(false);
+                }
+            }
+        }
+    }
+
+    public List<Integer> getCoordonnees(Ennemi ennemi) {
+        List<Integer> coorEnnemi = new ArrayList<>();
+        coorEnnemi.add((int) ennemi.getPane().getTranslateX() / 32);
+        coorEnnemi.add((int) ennemi.getPane().getTranslateY() / 32);
+        return coorEnnemi;
     }
 
     private List<String> generatesWaypoints(){
