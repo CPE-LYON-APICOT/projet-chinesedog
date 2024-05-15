@@ -18,8 +18,10 @@ public class ButtonClickHandler implements EventHandler<ActionEvent> {
 
     @Override
     public void handle(ActionEvent event) {
+        System.out.println("Tour avant : " + tour.getCoordonnees());
         upgradeTower(tour);
         updateText();
+        System.out.println("Tour avant : " + tour.getCoordonnees());
         event.consume();
     }
 

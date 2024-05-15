@@ -5,6 +5,7 @@ import javafx.scene.layout.Pane;
 import java.util.List;
 
 public class Ennemi {
+    private int vie;
     private List<String> waypoints;
     private Pane pane;
     private int currentWaypointIndex = 0;

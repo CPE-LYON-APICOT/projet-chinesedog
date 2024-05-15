@@ -58,5 +58,11 @@ public abstract class Enemy {
     public double getVitesse() {
         return vitesse;
     }
+    public int getVie() {
+        return vie;
+    }
+    public void setVie(int vie) {
+        this.vie = vie;
+    }
 
 }

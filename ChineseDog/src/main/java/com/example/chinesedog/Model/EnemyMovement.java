@@ -47,7 +47,7 @@ public class EnemyMovement extends Application {
 
 /* Timeline to update enemy positions*/
 
-        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(16), event -> moveEnemies(root)));
+        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(16), event -> moveEnemies(root, enemies)));
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
 
@@ -57,7 +57,7 @@ public class EnemyMovement extends Application {
            vague = new Vague(15, 1, 30);
     }
 
-    public void spawnEnemies(Pane root) {
+    public List<Enemy> spawnEnemies(Pane root) {
         Random random = new Random();
         waveGenerator();
         List<String> waypoints = generatesWaypoints();
@@ -66,7 +66,7 @@ public class EnemyMovement extends Application {
         double targetY = Double.parseDouble(parts[1]);
         for (int i = 0; i < vague.getNombreEnnemis(); i++) {
             EnemyFactory VolantFactory = new EnemyVolantFactory();
-            Enemy enemy = VolantFactory.createEnemy(waypoints, 100, 1, 1, 1);
+            Enemy enemy = VolantFactory.createEnemy(waypoints, 70, 1, 1, 1);
             enemy.setPane(new Rectangle());
             enemy.getPane().setWidth(ENEMY_WIDTH);
             enemy.getPane().setHeight(ENEMY_HEIGHT);
@@ -75,33 +75,37 @@ public class EnemyMovement extends Application {
             enemy.getPane().setTranslateX(-323 + targetX);
             enemy.getPane().setTranslateY(-339 + targetY + 50 + i * vague.getIntervalleSpawn());
 
-            System.out.println("Target X: " + targetX);
-            System.out.println("Target Y: " + targetY);
+/*            System.out.println("Target X: " + targetX);
+            System.out.println("Target Y: " + targetY);*/
 
             enemies.add(enemy);
             root.getChildren().add(enemy.getPane());
         }
-
+        return enemies;
     }
 
-    public void checkAndAttackEnemies(Ennemi ennemi) {
+    public void checkAndAttackEnemies(Enemy enemy) {
         for (Tour tour : towers) {
             List<Integer> coorTour = tour.getCoordonnees();
-            List<Integer> coorEnnemi = getCoordonnees(ennemi);
+            List<Integer> coorEnnemi = getCoordonnees(enemy);
+/*            System.out.println("Check des coordonnées de la tour: " + coorTour + " et de l'ennemi: " + coorEnnemi);*/
             int distance = Math.abs(coorTour.get(0) - coorEnnemi.get(0)) + Math.abs(coorTour.get(1) - coorEnnemi.get(1));
-            if (distance <= tour.getPortee()) {
-                ennemi.setVie(ennemi.getVie() - tour.getDegats());
-                if (ennemi.getVie() <= 0) {
-                    ennemi.getPane().setVisible(false);
+/*            System.out.println("Check de la distance: " + distance);*/
+            if (distance <= tour.getPortee() - 2) {
+                enemy.setVie((int) (enemy.getVie() - tour.getDegats()));
+/*                System.out.println("Attaque ! Dégats de la tour : " + tour.getDegats() +"Vie de l'ennemi: " + enemy.getVie());*/
+                if (enemy.getVie() <= 0) {
+/*                    System.out.println("Ennemi mort");*/
+                    enemy.getPane().setVisible(false);
                 }
             }
         }
     }
 
-    public List<Integer> getCoordonnees(Ennemi ennemi) {
+    public List<Integer> getCoordonnees(Enemy enemy) {
         List<Integer> coorEnnemi = new ArrayList<>();
-        coorEnnemi.add((int) ennemi.getPane().getTranslateX() / 32);
-        coorEnnemi.add((int) ennemi.getPane().getTranslateY() / 32);
+        coorEnnemi.add((int) (enemy.getPane().getTranslateX() + 320) / 64);
+        coorEnnemi.add((int) (enemy.getPane().getTranslateY() + 320) / 64);
         return coorEnnemi;
     }
 
@@ -144,20 +148,15 @@ public class EnemyMovement extends Application {
         return waypoints;
     }
 
-    public void moveEnemies(Pane root) {
-        for (Enemy enemy : enemies) {
+    public void moveEnemies(Pane root, List<Enemy> ennemies) {
 
-
-/*Get current position*/
-
+        for (Enemy enemy : ennemies) {
+            checkAndAttackEnemies(enemy);
             double currentX = enemy.getPane().getTranslateX();
             double currentY = enemy.getPane().getTranslateY();
 
-
-/*Calculate new position*/
-
             String nextWaypoint = enemy.getNextWaypoint();
-            System.out.println("Next waypoint: " + nextWaypoint);
+
             String[] parts = nextWaypoint.split(",");
             double targetX = Double.parseDouble(parts[0]);
             double targetY = Double.parseDouble(parts[1]);
@@ -165,7 +164,7 @@ public class EnemyMovement extends Application {
             double newX = currentX;
             double newY = currentY;
 
-            System.out.println("Current position: " + currentX + ", " + currentY);
+/*            System.out.println("Current position: " + currentX + ", " + currentY);*/
 
             if (currentX == targetX - SCENE_WIDTH/2 && currentY == targetY - SCENE_HEIGHT/2) {
                 if (enemy.getCurrentWaypointIndex() >= enemy.getWaypoints().size() - 1) {
@@ -190,8 +189,6 @@ public class EnemyMovement extends Application {
             } else if (targetY - SCENE_HEIGHT/2 > Math.round(currentY)) {
                 enemy.getPane().setTranslateY(enemy.getVitesse() + currentY);
             }
-
-
         }
     }
 

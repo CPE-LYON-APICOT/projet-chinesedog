@@ -102,7 +102,7 @@ public class test extends Application {
         // Créer un ImageView pour afficher l'image
         ImageView imageView = new ImageView(fxImage);
 
-        List<Tour> tours = new ArrayList<>();
+        List<Tour> towers = new ArrayList<>();
 
         // Créer une pile (StackPane) pour contenir l'ImageView
         StackPane root = new StackPane();
@@ -115,7 +115,7 @@ public class test extends Application {
         MapClickHandler clickHandler = new MapClickHandler(0,0, numRows, numCols, herbe.getWidth(), herbe.getHeight(), root, shopView, mapSansEspace, carteConverti);
         scene.setOnMouseClicked(clickHandler);
 
-        createShopView(root, createItemsShop(currentPath, root, clickHandler.getImageX(), clickHandler.getImageY(), clickHandler, carteConverti), shopView);
+        createShopView(root, createItemsShop(currentPath, root, clickHandler.getImageX(), clickHandler.getImageY(), clickHandler, carteConverti, towers), shopView);
         // Création d'un rectangle blanc
         Rectangle rectangle = new Rectangle(200, 250, Color.WHITE);
         rectangle.setStroke(Color.BLACK); // Ajout d'une bordure noire
@@ -134,19 +134,21 @@ public class test extends Application {
         StackPane.setMargin(button, new Insets(210, 0, 0, 60));
         root.getChildren().addAll(rectangle, text, button);
 
-        EnemyMovement enemyMovement = new EnemyMovement(tours);
-
-        enemyMovement.spawnEnemies(root);
-
+        EnemyMovement enemyMovement = new EnemyMovement(towers);
+        List<Enemy> ennemies = enemyMovement.spawnEnemies(root);
 
         /* Timeline to update enemy positions*/
 
-        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(16), event -> enemyMovement.moveEnemies(root)));
+        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(16), event -> enemyMovement.moveEnemies(root, ennemies)));
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
 
-
-
+/*
+        Rectangle rectangle2 = new Rectangle(-320, -320, 50, 50);
+        rectangle2.setFill(Color.RED);
+        rectangle2.setTranslateX(-320);
+        rectangle2.setTranslateY(-320);
+        root.getChildren().add(rectangle2);*/
 
         primaryStage.setScene(scene);
         primaryStage.setTitle("Tower Defense");
@@ -161,7 +163,7 @@ public class test extends Application {
         root.getChildren().addAll(shopView, itemViews[0], itemViews[1], itemViews[2]);
     }
 
-    private ImageView[] createItemsShop(String currentPath, StackPane root, Double imageX, Double imageY, MapClickHandler clickHandler, Carte map) {
+    private ImageView[] createItemsShop(String currentPath, StackPane root, Double imageX, Double imageY, MapClickHandler clickHandler, Carte map, List<Tour> towers) {
         Tour canonVert = new Canon("Canon Vert",-1,-1,1, 50, 10, 3, 10);
         Tour canonJaune = new Canon("Canon Jaune",-1,-1,1, 100, 10, 5, 8.5);
         Tour canonRouge = new Canon("Canon Rouge",-1,-1,1, 225, 8, 3, 25);
@@ -183,7 +185,7 @@ public class test extends Application {
             System.out.println("Clic sur l'élément du magasin 1 !");
             System.out.println("imageX = " + imageX);
             System.out.println("imageY = " + imageY);
-            buyTower(canon1View, root, clickHandler.getImageX(), clickHandler.getImageY(), canonVert, map);
+            buyTower(canon1View, root, clickHandler.getImageX(), clickHandler.getImageY(), canonVert, map, towers);
             event.consume();
         });
 
@@ -194,7 +196,7 @@ public class test extends Application {
             System.out.println("Clic sur l'élément du magasin 2 !");
             System.out.println("imageX = " + imageX);
             System.out.println("imageY = " + imageY);
-            buyTower(canon2View, root, clickHandler.getImageX(), clickHandler.getImageY(), canonJaune, map);
+            buyTower(canon2View, root, clickHandler.getImageX(), clickHandler.getImageY(), canonJaune, map, towers);
             event.consume();
         });
 
@@ -205,7 +207,7 @@ public class test extends Application {
             System.out.println("Clic sur l'élément du magasin 3 !");
             System.out.println("imageX = " + imageX);
             System.out.println("imageY = " + imageY);
-            buyTower(canon3View, root, clickHandler.getImageX(), clickHandler.getImageY(), canonRouge, map);
+            buyTower(canon3View, root, clickHandler.getImageX(), clickHandler.getImageY(), canonRouge, map, towers);
             event.consume();
         });
 
@@ -213,7 +215,7 @@ public class test extends Application {
 
     }
 
-    private void buyTower(ImageView achat, StackPane root, double imageX, double imageY, Tour tour, Carte map) {
+    private void buyTower(ImageView achat, StackPane root, double imageX, double imageY, Tour tour, Carte map, List<Tour> towers) {
         ImageView imageView = new ImageView(achat.getImage());
         System.out.println("Achat d'une tour !");
         imageView.setTranslateY(imageX - 352);
@@ -229,6 +231,7 @@ public class test extends Application {
             event.consume();
         });
         fermerShop(root);
+        towers.add(tour);
         root.getChildren().add(imageView);
     }
 
