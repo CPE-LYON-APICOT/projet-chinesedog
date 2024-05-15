@@ -9,13 +9,13 @@ public abstract class Enemy {
     private List<String> waypoints;
     private Rectangle pane;
     private int currentWaypointIndex = 0;
-    private int vitesse;
+    private double vitesse;
     private int vie;
     private int armure;
     private int resistanceMagique;
 
 
-    public Enemy(List<String> waypoints , int vitesse, int vie, int armure, int resistanceMagique) {
+    public Enemy(List<String> waypoints , double vitesse, int vie, int armure, int resistanceMagique) {
         this.waypoints = waypoints;
         this.vitesse = vitesse;
         this.vie = vie;
@@ -55,7 +55,7 @@ public abstract class Enemy {
         this.currentWaypointIndex = currentWaypointIndex;
     }
 
-    public int getVitesse() {
+    public double getVitesse() {
         return vitesse;
     }
 

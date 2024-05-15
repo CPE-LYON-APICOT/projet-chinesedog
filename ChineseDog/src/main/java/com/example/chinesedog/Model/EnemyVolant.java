@@ -4,22 +4,21 @@ import com.example.chinesedog.attaquer;
 
 import java.util.List;
 
-public class EnnemiTerrestre extends Enemy implements attaquer {
+public class EnemyVolant extends Enemy implements attaquer {
 
     private boolean peutAttaquerVolant;
-    public EnnemiTerrestre(List<String> waypoints, int vie, int vitesse, int armure, int resistanceMagique) {
+    public EnemyVolant(List<String> waypoints, int vie, double vitesse, int armure, int resistanceMagique) {
         super(waypoints, vitesse, vie, armure, resistanceMagique);
-        this.peutAttaquerVolant = false;
+        this.peutAttaquerVolant = true;
     }
     @Override
     public void attaquer() {
-        System.out.println("L'ennemi terrestre attaque");
+        System.out.println("L'ennemi volant attaque");
         // TODO : Ajouter le code pour attaquer une fois la Base codé
     }
 
     public boolean getPeutAttaquerVolant() {
         return peutAttaquerVolant;
     }
-
 }
 
