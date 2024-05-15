@@ -1,13 +1,14 @@
-/*
 package com.example.chinesedog.Model;
 
 import com.example.chinesedog.attaquer;
 
-public class EnnemiVolant extends Ennemi implements attaquer {
+import java.util.List;
+
+public class EnnemiVolant extends Enemy implements attaquer {
 
     private boolean peutAttaquerVolant;
-    public EnnemiVolant(int vie, int vitesse, int armure, int resistanceMagique, String nom, String imagePath, boolean peutAttaquerVolant) {
-        super(vie, vitesse, armure, resistanceMagique, nom, imagePath);
+    public EnnemiVolant(List<String> waypoints, int vie, int vitesse, int armure, int resistanceMagique) {
+        super(waypoints, vitesse, vie, armure, resistanceMagique);
         this.peutAttaquerVolant = true;
     }
     @Override
@@ -20,4 +21,4 @@ public class EnnemiVolant extends Ennemi implements attaquer {
         return peutAttaquerVolant;
     }
 }
-*/
+

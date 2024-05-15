@@ -1,6 +1,9 @@
 package com.example.chinesedog;
 
 import com.example.chinesedog.Model.*;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.Node;
@@ -26,6 +29,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.geometry.Insets;
+import javafx.util.Duration;
 
 public class test extends Application {
     @Override
@@ -33,9 +37,9 @@ public class test extends Application {
         String currentPath = System.getProperty("user.dir");
         // Load TMX file
         // Charger les images
-        BufferedImage herbe = ImageIO.read(new File(currentPath + "\\src\\main\\resources\\com\\example\\chinesedog\\assets\\Texture\\4\\PNG\\mapTile_022.png"));
-        BufferedImage pierre = ImageIO.read(new File(currentPath + "\\src\\main\\resources\\com\\example\\chinesedog\\assets\\Texture\\4\\PNG\\mapTile_027.png"));
-        BufferedImage chemin = ImageIO.read(new File(currentPath + "\\src\\main\\resources\\com\\example\\chinesedog\\assets\\Texture\\4\\PNG\\mapTile_082.png"));
+        BufferedImage herbe = ImageIO.read(test.class.getResourceAsStream("/com/example/chinesedog/assets/Texture/4/PNG/mapTile_022.png"));
+        BufferedImage pierre = ImageIO.read(test.class.getResourceAsStream("/com/example/chinesedog/assets/Texture/4/PNG/mapTile_027.png"));
+        BufferedImage chemin = ImageIO.read(test.class.getResourceAsStream("/com/example/chinesedog/assets/Texture/4/PNG/mapTile_082.png"));
 
         int numRows = 10; // Nombre de lignes dans votre carte
         int numCols = 10; // Nombre de colonnes dans votre carte
@@ -47,7 +51,7 @@ public class test extends Application {
         Carte carteConverti = carte.switchStringToCarte(mapSansEspace);
         carteConverti.displayCarte();
 
-       /// Test Ennemi/Vague
+        /// Test Ennemi/Vague
 /*        List<Ennemi> ennemis = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             Ennemi ennemi = new EnnemiTerrestre(100, 10, 10, 10, "testTerrestrial", "C:\\Users\\Portal\\Desktop\\Cours\\POO\\Projet\\projet-chinesedog\\ChineseDog\\src\\main\\java\\com\\example\\chinesedog\\assets\\Enemy\\2\\Foozle_2DC0028_Spire_EnemyPack_2_Ground\\Ground\\Previews\\Scorpion.gif",false);
@@ -103,7 +107,7 @@ public class test extends Application {
         Scene scene = new Scene(root, combinedWidth, combinedHeight);
 
         root.getChildren().add(imageView);
-        ImageView shopView = new ImageView(new Image("file:///" + currentPath + "/src/main/resources/com/example/chinesedog/assets/shop/side.png"));
+        ImageView shopView = new ImageView(new Image(test.class.getResourceAsStream("/com/example/chinesedog/assets/shop/side.png")));
 
         // Créer une instance de MapClickHandler
         MapClickHandler clickHandler = new MapClickHandler(0,0, numRows, numCols, herbe.getWidth(), herbe.getHeight(), root, shopView, mapSansEspace, carteConverti);
@@ -127,6 +131,21 @@ public class test extends Application {
         StackPane.setAlignment(button, javafx.geometry.Pos.TOP_LEFT);
         StackPane.setMargin(button, new Insets(210, 0, 0, 60));
         root.getChildren().addAll(rectangle, text, button);
+
+        EnemyMovement enemyMovement = new EnemyMovement();
+
+        enemyMovement.spawnEnemies(root);
+
+
+        /* Timeline to update enemy positions*/
+
+        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(16), event -> enemyMovement.moveEnemies(root)));
+        timeline.setCycleCount(Animation.INDEFINITE);
+        timeline.play();
+
+
+
+
         primaryStage.setScene(scene);
         primaryStage.setTitle("Tower Defense");
         primaryStage.show();
@@ -145,9 +164,9 @@ public class test extends Application {
         Tour canonJaune = new Canon("Canon Jaune",-1,-1,1, 100, 10, 5, 8.5);
         Tour canonRouge = new Canon("Canon Rouge",-1,-1,1, 225, 8, 3, 25);
 
-        Image canon1 = new Image("file:///" + currentPath + "/src/main/resources/com/example/chinesedog/assets/Tower/5/tower_1.png");
-        Image canon2 = new Image("file:///" + currentPath + "/src/main/resources/com/example/chinesedog/assets/Tower/5/tower_2.png");
-        Image canon3 = new Image("file:///" + currentPath + "/src/main/resources/com/example/chinesedog/assets/Tower/5/tower_3.png");
+        Image canon1 = new Image(test.class.getResourceAsStream("/com/example/chinesedog/assets/Tower/5/tower_1.png"));
+        Image canon2 = new Image(test.class.getResourceAsStream("/com/example/chinesedog/assets/Tower/5/tower_2.png"));
+        Image canon3 = new Image(test.class.getResourceAsStream("/com/example/chinesedog/assets/Tower/5/tower_3.png"));
 
         ImageView canon1View = new ImageView(canon1);
         ImageView canon2View = new ImageView(canon2);

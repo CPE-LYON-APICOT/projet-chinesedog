@@ -1,4 +1,3 @@
-/*
 package com.example.chinesedog.Model;
 
 import javafx.animation.Animation;
@@ -9,6 +8,8 @@ import javafx.geometry.Bounds;
 import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -38,13 +39,13 @@ public class EnemyMovement extends Application {
         primaryStage.setTitle("Enemy Movement Example");
         primaryStage.show();
 
-         */
-/*Create enemies*//*
+
+/*Create enemies*/
 
         spawnEnemies(root);
 
-        */
-/* Timeline to update enemy positions*//*
+
+/* Timeline to update enemy positions*/
 
         Timeline timeline = new Timeline(new KeyFrame(Duration.millis(16), event -> moveEnemies(root)));
         timeline.setCycleCount(Animation.INDEFINITE);
@@ -56,7 +57,7 @@ public class EnemyMovement extends Application {
            vague = new Vague(15, 1, 30);
     }
 
-    private void spawnEnemies(Pane root) {
+    public void spawnEnemies(Pane root) {
         Random random = new Random();
         waveGenerator();
         List<String> waypoints = generatesWaypoints();
@@ -64,27 +65,21 @@ public class EnemyMovement extends Application {
         double targetX = Double.parseDouble(parts[0]);
         double targetY = Double.parseDouble(parts[1]);
         for (int i = 0; i < vague.getNombreEnnemis(); i++) {
-            Enemy enemy = new Enemy(10, 1, 1, 1);
-            enemy.setWaypoints(waypoints);
-            enemy.setPane(new Pane());
-            enemy.getPane().setPrefSize(ENEMY_WIDTH, ENEMY_HEIGHT);
-            enemy.getPane().setLayoutY(targetY + 150 +i * vague.getIntervalleSpawn());
-            enemy.getPane().setLayoutX( targetX );
-            enemy.getPane().setStyle("-fx-background-color: rgb(200,0,0)");
-                "+random.nextInt(256)+","+random.nextInt(256)+","+random.nextInt(256)+"
+            Enemy enemy = new EnnemiVolant(waypoints, 100, 1, 1, 1);
+            enemy.setPane(new Rectangle());
+            enemy.getPane().setWidth(ENEMY_WIDTH);
+            enemy.getPane().setHeight(ENEMY_HEIGHT);
+            enemy.getPane().setFill(Color.RED);
+
+            enemy.getPane().setTranslateX(-323 + targetX);
+            enemy.getPane().setTranslateY(-339 + targetY + 50 + i * vague.getIntervalleSpawn());
+
+            System.out.println("Target X: " + targetX);
+            System.out.println("Target Y: " + targetY);
+
             enemies.add(enemy);
             root.getChildren().add(enemy.getPane());
         }
-        Enemy enemy = new EnnemiVolant(10, 2, 1, 1, true);
-        enemy.setWaypoints(waypoints);
-        enemy.setPane(new Pane());
-        enemy.getPane().setPrefSize(ENEMY_WIDTH, ENEMY_HEIGHT);
-        enemy.getPane().setLayoutY(targetY + 150 +20 * vague.getIntervalleSpawn());
-        enemy.getPane().setLayoutX( targetX );
-        enemy.getPane().setStyle("-fx-background-color: rgb(0,200,0)");
-            "+random.nextInt(256)+","+random.nextInt(256)+","+random.nextInt(256)+"
-        enemies.add(enemy);
-        root.getChildren().add(enemy.getPane());
     }
 
     private List<String> generatesWaypoints(){
@@ -92,8 +87,8 @@ public class EnemyMovement extends Application {
         String index;
         int count = 0;
         for (int i = 0; i < map.length(); i++) {
-             */
-/*Check if the current character matches the target letter*//*
+
+/*Check if the current character matches the target letter*/
 
             if (map.charAt(i) == 'C') {
                 count++;
@@ -126,17 +121,17 @@ public class EnemyMovement extends Application {
         return waypoints;
     }
 
-    private void moveEnemies (Pane root) {
+    public void moveEnemies(Pane root) {
         for (Enemy enemy : enemies) {
 
-             */
-/*Get current position*//*
 
-            double currentX = enemy.getPane().getLayoutX();
-            double currentY = enemy.getPane().getLayoutY();
+/*Get current position*/
 
-             */
-/*Calculate new position*//*
+            double currentX = enemy.getPane().getTranslateX();
+            double currentY = enemy.getPane().getTranslateY();
+
+
+/*Calculate new position*/
 
             String nextWaypoint = enemy.getNextWaypoint();
             System.out.println("Next waypoint: " + nextWaypoint);
@@ -149,7 +144,7 @@ public class EnemyMovement extends Application {
 
             System.out.println("Current position: " + currentX + ", " + currentY);
 
-            if (isPaneTouchingPoint(enemy.getPane(), targetX, targetY)) {
+            if (currentX == targetX - SCENE_WIDTH/2 && currentY == targetY - SCENE_HEIGHT/2) {
                 if (enemy.getCurrentWaypointIndex() >= enemy.getWaypoints().size() - 1) {
                     root.getChildren().remove(enemy.getPane());
                     enemies.remove(enemy);
@@ -161,37 +156,30 @@ public class EnemyMovement extends Application {
                 targetY = Double.parseDouble(parts[1]);
             }
 
-            if (targetX < Math.round(currentX)) {
-                newX -= enemy.getVitesse();
-            } else if (targetX > Math.round(currentX)) {
-                newX += enemy.getVitesse();
+            if (targetX - SCENE_WIDTH/2 < Math.round(currentX)) {
+                enemy.getPane().setTranslateX(-enemy.getVitesse() + currentX);
+            } else if (targetX - SCENE_WIDTH/2 > Math.round(currentX)) {
+                enemy.getPane().setTranslateX(enemy.getVitesse() + currentX);
             }
 
-            if (targetY < Math.round(currentY)) {
-                newY -= enemy.getVitesse();
-            } else if (targetY > Math.round(currentY)) {
-                newY += enemy.getVitesse();
+            if (targetY - SCENE_HEIGHT/2 < Math.round(currentY)) {
+                enemy.getPane().setTranslateY(-enemy.getVitesse() + currentY);
+            } else if (targetY - SCENE_HEIGHT/2 > Math.round(currentY)) {
+                enemy.getPane().setTranslateY(enemy.getVitesse() + currentY);
             }
 
 
-
-
-
-             */
-/*Update enemy position*//*
-
-            enemy.getPane().relocate(Math.round(newX), Math.round(newY));
         }
     }
 
-        public static boolean isPaneTouchingPoint(Pane pane, double pointX, double pointY) {
+        public static boolean isPaneTouchingPoint(Rectangle pane, double pointX, double pointY) {
             double paneX = pane.getLayoutX();
             double paneY = pane.getLayoutY();
             double paneWidth = pane.getWidth();
             double paneHeight = pane.getHeight();
 
-             */
-/*Vérifie si le point est à l'intérieur de la pane ou sur son bord*//*
+
+/*Vérifie si le point est à l'intérieur de la pane ou sur son bord*/
 
             return (pointX >= paneX && pointX <= paneX + paneWidth &&
                     pointY >= paneY && pointY <= paneY + paneHeight);
@@ -201,4 +189,4 @@ public class EnemyMovement extends Application {
             launch(args);
         }
 }
-*/
+

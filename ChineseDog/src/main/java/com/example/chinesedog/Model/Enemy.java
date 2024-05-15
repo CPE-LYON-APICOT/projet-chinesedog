@@ -1,13 +1,27 @@
 package com.example.chinesedog.Model;
 
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Rectangle;
 
 import java.util.List;
 
-class Enemy {
+public abstract class Enemy {
     private List<String> waypoints;
-    private Pane pane;
+    private Rectangle pane;
     private int currentWaypointIndex = 0;
+    private int vitesse;
+    private int vie;
+    private int armure;
+    private int resistanceMagique;
+
+
+    public Enemy(List<String> waypoints , int vitesse, int vie, int armure, int resistanceMagique) {
+        this.waypoints = waypoints;
+        this.vitesse = vitesse;
+        this.vie = vie;
+        this.armure = armure;
+        this.resistanceMagique = resistanceMagique;
+    }
 
     public List<String> getWaypoints() {
         return waypoints;
@@ -17,11 +31,11 @@ class Enemy {
         this.waypoints = waypoints;
     }
 
-    public Pane getPane() {
+    public Rectangle getPane() {
         return pane;
     }
 
-    public void setPane(Pane pane) {
+    public void setPane(Rectangle pane) {
         this.pane = pane;
     }
 
@@ -41,5 +55,8 @@ class Enemy {
         this.currentWaypointIndex = currentWaypointIndex;
     }
 
+    public int getVitesse() {
+        return vitesse;
+    }
 
 }
