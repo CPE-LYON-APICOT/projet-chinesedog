@@ -6,6 +6,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.embed.swing.SwingFXUtils;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -43,9 +44,14 @@ public class test extends Application {
 
         int numRows = 10; // Nombre de lignes dans votre carte
         int numCols = 10; // Nombre de colonnes dans votre carte
-
+        //Map 1
         String map = "HHHHHCHTHH HHHHTCCCCH HHHHHHHTCH HHHHTHHHCH TCCCCHHHCT HCHTCHHHCH HCHCCHHHCH TCHCHHHTCH HCHCCCCCCH HCHHTHHHHH";
         String mapSansEspace = "HHHHHCHTHHHHHHTCCCCHHHHHHHHTCHHHHHTHHHCHTCCCCHHHCTHCHTCHHHCHHCHCCHHHCHTCHCHHHTCHHCHCCCCCCHHCHHTHHHHH";
+
+        //Map 2
+        //String map = "HHHHHHHCHH HHHHHHCCHH HHHHHHCHHH HHHHHTCTHH HHHHHHCHHH HHHHHHCCTH HHHHHHHCHH HHHHHHHCTH HHHHTHHCHH HCCCCCCCHH";
+        //String mapSansEspace = "HHHHHHHCHHHHHHHHCCHHHHHHHHCHHHHHHHHTCTHHHHHHHHCHHHHHHHHHCCTHHHHHHHHCHHHHHHHHHCTHHHHHTHHCHHHCCCCCCCHH";
+
         Carte carte = new CarteBuilder(numRows, numCols).setCarteString(map).setCarteStringSansEspace(mapSansEspace).build();
 
         Carte carteConverti = carte.switchStringToCarte(mapSansEspace);
@@ -126,9 +132,9 @@ public class test extends Application {
         // Création d'un bouton
         Button button = new Button("Upgrade");
         button.setVisible(false);
-        StackPane.setAlignment(rectangle, javafx.geometry.Pos.TOP_LEFT);
-        StackPane.setAlignment(text, javafx.geometry.Pos.TOP_LEFT);
-        StackPane.setAlignment(button, javafx.geometry.Pos.TOP_LEFT);
+        StackPane.setAlignment(rectangle, Pos.TOP_LEFT);
+        StackPane.setAlignment(text, Pos.TOP_LEFT);
+        StackPane.setAlignment(button, Pos.TOP_LEFT);
         StackPane.setMargin(button, new Insets(210, 0, 0, 60));
         root.getChildren().addAll(rectangle, text, button);
 
@@ -160,9 +166,6 @@ public class test extends Application {
     }
 
     private ImageView[] createItemsShop(String currentPath, StackPane root, Double imageX, Double imageY, MapClickHandler clickHandler, Carte map) {
-        Tour canonVert = new Canon("Canon Vert",-1,-1,1, 50, 10, 3, 10);
-        Tour canonJaune = new Canon("Canon Jaune",-1,-1,1, 100, 10, 5, 8.5);
-        Tour canonRouge = new Canon("Canon Rouge",-1,-1,1, 225, 8, 3, 25);
 
         Image canon1 = new Image(test.class.getResourceAsStream("/com/example/chinesedog/assets/Tower/5/tower_1.png"));
         Image canon2 = new Image(test.class.getResourceAsStream("/com/example/chinesedog/assets/Tower/5/tower_2.png"));
@@ -181,7 +184,7 @@ public class test extends Application {
             System.out.println("Clic sur l'élément du magasin 1 !");
             System.out.println("imageX = " + imageX);
             System.out.println("imageY = " + imageY);
-            buyTower(canon1View, root, clickHandler.getImageX(), clickHandler.getImageY(), canonVert, map);
+            buyTower(canon1View, root, clickHandler.getImageX(), clickHandler.getImageY(), "canonVert", map);
             event.consume();
         });
 
@@ -192,7 +195,7 @@ public class test extends Application {
             System.out.println("Clic sur l'élément du magasin 2 !");
             System.out.println("imageX = " + imageX);
             System.out.println("imageY = " + imageY);
-            buyTower(canon2View, root, clickHandler.getImageX(), clickHandler.getImageY(), canonJaune, map);
+            buyTower(canon2View, root, clickHandler.getImageX(), clickHandler.getImageY(), "canonJaune", map);
             event.consume();
         });
 
@@ -203,7 +206,7 @@ public class test extends Application {
             System.out.println("Clic sur l'élément du magasin 3 !");
             System.out.println("imageX = " + imageX);
             System.out.println("imageY = " + imageY);
-            buyTower(canon3View, root, clickHandler.getImageX(), clickHandler.getImageY(), canonRouge, map);
+            buyTower(canon3View, root, clickHandler.getImageX(), clickHandler.getImageY(), "canonRouge", map);
             event.consume();
         });
 
@@ -211,19 +214,41 @@ public class test extends Application {
 
     }
 
-    private void buyTower(ImageView achat, StackPane root, double imageX, double imageY, Tour tour, Carte map) {
+    private void buyTower(ImageView achat, StackPane root, double imageX, double imageY, String type, Carte map) {
+        var ref = new Object() {
+            Tour tour = null;
+        };
+        switch (type) {
+            case "canonVert":
+                ref.tour = new Canon("Canon Vert",-1,-1,1, 50, 10, 1000, 3, 10);
+                break;
+            case "canonJaune":
+                ref.tour = new Canon("Canon Jaune",-1,-1,1, 100, 10, 1500, 5, 8.5);
+                break;
+            case "canonRouge":
+                ref.tour = new Canon("Canon Rouge",-1,-1,1, 225, 8, 3000, 3, 25);
+                break;
+            default:
+                System.out.println("Tour inconnue !");
+                break;
+        }
+        
+        
+        
+        
+        
         ImageView imageView = new ImageView(achat.getImage());
         System.out.println("Achat d'une tour !");
         imageView.setTranslateY(imageX - 352);
         imageView.setTranslateX(imageY - 352);
-        tour.setRow(((int) imageX / 64) - 1);
-        tour.setCol(((int) imageY / 64) - 1);
-        map.getCase(tour.getRow(), tour.getCol()).setIsOccupied(true);
+        ref.tour.setRow(((int) imageX / 64) - 1);
+        ref.tour.setCol(((int) imageY / 64) - 1);
+        map.getCase(ref.tour.getRow(), ref.tour.getCol()).setIsOccupied(true);
         imageView.setVisible(true);
-        updateText(root, tour);
+        updateText(root, ref.tour);
 
         imageView.setOnMouseClicked(event -> {
-            updateText(root, tour);
+            updateText(root, ref.tour);
             event.consume();
         });
         fermerShop(root);
