@@ -28,11 +28,11 @@ public class ButtonClickHandler implements EventHandler<ActionEvent> {
     private void upgradeTower(Tour tour) {
         System.out.println("Niveau de la tour : " + tour.getNiveau());
         if (tour.getNiveau() == 1) {
-            new Niveau2(tour);
+            tour = new Niveau2(tour);
             System.out.println("La tour a été mise à niveau 2 avec succès !");
         }
         else if (tour.getNiveau() == 2) {
-            new Niveau3(tour);
+            tour = new Niveau3(tour);
             System.out.println("La tour a été mise à niveau 3 avec succès !");
         }
         else {
