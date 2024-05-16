@@ -17,6 +17,4 @@ module com.example.chinesedog {
     exports com.example.chinesedog;
     exports com.example.chinesedog.Model;
     opens com.example.chinesedog.Model to javafx.fxml;
-    exports com.example.chinesedog.Controller;
-    opens com.example.chinesedog.Controller to javafx.fxml;
 }

@@ -26,9 +26,6 @@ public class SelectionManager {
         // Mettre à jour la référence du canon sélectionné
         selectedCanon = imageView;
 
-        // Afficher l'indicateur de sélection
-/*        showSelectionIndicator(imageView, root);*/
-
         return selectedCanon;
     }
 
@@ -40,34 +37,5 @@ public class SelectionManager {
             selectionIndicator = null;
         }
     }
-/*
-    private static void showSelectionIndicator(ImageView imageView, StackPane root) {
-        // Créer un rectangle rouge autour de l'image sélectionnée
-        selectionIndicator = new Rectangle(imageView.getBoundsInLocal().getWidth() + 10, imageView.getBoundsInLocal().getHeight() + 10);
-        selectionIndicator.setFill(Color.TRANSPARENT);
-        selectionIndicator.setStroke(Color.RED);
-        selectionIndicator.setArcWidth(10);
-        selectionIndicator.setArcHeight(10);
-
-        // Convertir les coordonnées de l'image de son système de coordonnées local au système de coordonnées de la scène
-       Bounds boundsInScene = imageView.localToScene(imageView.getBoundsInLocal());
-
-        // Capturer le contenu graphique du rectangle dans une image
-        WritableImage writableImage = new WritableImage((int) selectionIndicator.getWidth(), (int) selectionIndicator.getHeight());
-        SnapshotParameters params = new SnapshotParameters();
-        selectionIndicator.snapshot(params, writableImage);
-        ImageView selectionImageView = new ImageView(writableImage);
-
-        selectionImageView.setX(boundsInScene.getMinX());
-        selectionImageView.setY(boundsInScene.getMinY());
-        System.out.println("Bounds in scene: " + boundsInScene.getMinX());
-        System.out.println("Bounds in scene: " + boundsInScene.getMinY());
-
-        // Ajouter l'indicateur de sélection au parent du StackPane
-        root.getChildren().addAll(selectionImageView);
-    }*/
-
-
-
 
 }
