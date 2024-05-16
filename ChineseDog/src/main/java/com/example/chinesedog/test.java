@@ -121,7 +121,7 @@ public class test extends Application {
         MapClickHandler clickHandler = new MapClickHandler(0,0, numRows, numCols, herbe.getWidth(), herbe.getHeight(), root, shopView, mapSansEspace, carteConverti);
         scene.setOnMouseClicked(clickHandler);
 
-        createShopView(root, createItemsShop(currentPath, root, clickHandler.getImageX(), clickHandler.getImageY(), clickHandler, carteConverti), shopView);
+        createShopView(root, createItemsShop(currentPath, root, clickHandler.getImageX(), clickHandler.getImageY(), clickHandler, carteConverti, towers), shopView);
         // Création d'un rectangle blanc
         Rectangle rectangle = new Rectangle(200, 250, Color.WHITE);
         rectangle.setStroke(Color.BLACK); // Ajout d'une bordure noire
@@ -165,7 +165,7 @@ public class test extends Application {
         root.getChildren().addAll(shopView, itemViews[0], itemViews[1], itemViews[2]);
     }
 
-    private ImageView[] createItemsShop(String currentPath, StackPane root, Double imageX, Double imageY, MapClickHandler clickHandler, Carte map) {
+    private ImageView[] createItemsShop(String currentPath, StackPane root, Double imageX, Double imageY, MapClickHandler clickHandler, Carte map, List<Tour> towers) {
 
         Image canon1 = new Image(test.class.getResourceAsStream("/com/example/chinesedog/assets/Tower/5/tower_1.png"));
         Image canon2 = new Image(test.class.getResourceAsStream("/com/example/chinesedog/assets/Tower/5/tower_2.png"));
@@ -184,7 +184,7 @@ public class test extends Application {
             System.out.println("Clic sur l'élément du magasin 1 !");
             System.out.println("imageX = " + imageX);
             System.out.println("imageY = " + imageY);
-            buyTower(canon1View, root, clickHandler.getImageX(), clickHandler.getImageY(), "canonVert", map);
+            buyTower(canon1View, root, clickHandler.getImageX(), clickHandler.getImageY(), "canonVert", map, towers);
             event.consume();
         });
 
@@ -195,7 +195,7 @@ public class test extends Application {
             System.out.println("Clic sur l'élément du magasin 2 !");
             System.out.println("imageX = " + imageX);
             System.out.println("imageY = " + imageY);
-            buyTower(canon2View, root, clickHandler.getImageX(), clickHandler.getImageY(), "canonJaune", map);
+            buyTower(canon2View, root, clickHandler.getImageX(), clickHandler.getImageY(), "canonJaune", map, towers);
             event.consume();
         });
 
@@ -206,7 +206,7 @@ public class test extends Application {
             System.out.println("Clic sur l'élément du magasin 3 !");
             System.out.println("imageX = " + imageX);
             System.out.println("imageY = " + imageY);
-            buyTower(canon3View, root, clickHandler.getImageX(), clickHandler.getImageY(), "canonRouge", map);
+            buyTower(canon3View, root, clickHandler.getImageX(), clickHandler.getImageY(), "canonRouge", map, towers);
             event.consume();
         });
 
@@ -214,19 +214,19 @@ public class test extends Application {
 
     }
 
-    private void buyTower(ImageView achat, StackPane root, double imageX, double imageY, String type, Carte map) {
+    private void buyTower(ImageView achat, StackPane root, double imageX, double imageY, String type, Carte map, List<Tour> towers) {
         var ref = new Object() {
             Tour tour = null;
         };
         switch (type) {
             case "canonVert":
-                ref.tour = new Canon("Canon Vert",-1,-1,1, 50, 10, 1000, 3, 10);
+                ref.tour = new Canon("Canon Vert",-1,-1,1, 50, 1000, 0, 3, 10);
                 break;
             case "canonJaune":
-                ref.tour = new Canon("Canon Jaune",-1,-1,1, 100, 10, 1500, 5, 8.5);
+                ref.tour = new Canon("Canon Jaune",-1,-1,1, 100, 1500, 0, 5, 8.5);
                 break;
             case "canonRouge":
-                ref.tour = new Canon("Canon Rouge",-1,-1,1, 225, 8, 3000, 3, 25);
+                ref.tour = new Canon("Canon Rouge",-1,-1,1, 225, 3000, 0, 3, 25);
                 break;
             default:
                 System.out.println("Tour inconnue !");
