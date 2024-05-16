@@ -9,19 +9,30 @@ public abstract class Tour {
     protected int col;
     protected int niveau;
     protected double prix;
-    protected double vitesseAttaque;
+    protected double coolDown;
+    protected long lastAttackTime;
     protected double portee;
     protected double degats;
 
-    public Tour(String nom, int row, int col, int niveau, double prix, double vitesseAttaque, double portee, double degats) {
+    public Tour(String nom, int row, int col, int niveau, double prix, double coolDown, long lastAttackTime, double portee, double degats) {
         this.nom = nom;
         this.row = row;
         this.col = col;
         this.niveau = niveau;
         this.prix = prix;
-        this.vitesseAttaque = vitesseAttaque;
+        this.coolDown = coolDown;
+        this.lastAttackTime = System.currentTimeMillis();
         this.portee = portee;
         this.degats = degats;
+    }
+
+    public boolean canAttack() {
+        long currentTime = System.currentTimeMillis();
+        if (currentTime - lastAttackTime >= coolDown) {
+            lastAttackTime = currentTime;
+            return true;
+        }
+        return false;
     }
 
     public String getNom() {
@@ -42,7 +53,10 @@ public abstract class Tour {
     }
 
     public double getVitesseAttaque() {
-        return vitesseAttaque;
+        return coolDown;
+    }
+    public long getLastAttackTime() {
+        return lastAttackTime;
     }
 
     public double getPortee() {
@@ -76,8 +90,11 @@ public abstract class Tour {
         this.prix = prix;
     }
 
-    public void setVitesseAttaque(double vitesseAttaque) {
-        this.vitesseAttaque = vitesseAttaque;
+    public void setVitesseAttaque(double coolDown) {
+        this.coolDown = coolDown;
+    }
+    public void setLastAttackTime(long lastAttackTime) {
+        this.lastAttackTime = lastAttackTime;
     }
 
     public void setPortee(double portee) {
@@ -95,7 +112,8 @@ public abstract class Tour {
         this.col = tour.getCol();
         this.niveau = tour.getNiveau();
         this.prix = tour.getPrix();
-        this.vitesseAttaque = tour.getVitesseAttaque();
+        this.coolDown = tour.getVitesseAttaque();
+        this.lastAttackTime = tour.getLastAttackTime();
         this.portee = tour.getPortee();
         this.degats = tour.getDegats();
     }

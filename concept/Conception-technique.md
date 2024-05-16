@@ -22,7 +22,6 @@ Dans ces documents, il ne s'agit pas de cacher la poussière sous le tapis, il f
 > Vous pouvez dire : "Pour la gestion des collisions, nous utilisons une librairie tierce, toutefois celle-ci ne gère que les collisions entre des rectangles, au fur et à mesure des itérations, des ennemis de grande taille et de forme complexe sont apparus, toutefois, nous avons conservé une hitbox rectangulaire, en résulte que le joueur peut être touché alors que visuellement, il n'est pas en contact avec l'ennemi ; nous avions également envisagé de créer plusieurs hitbox de tailles différentes sur un même ennemi afin de mieux coller à la forme de celui-ci, toutefois, les performances du jeu ont étés trop dégradées"
 
 
-
 ---
 # Partie "Client" (pas trop technique) :
 
@@ -33,15 +32,13 @@ Dans l'idéal, le jeu devrait proposer plusieurs types de tours, plusieurs types
 
 ## Résultat
 
-Aujourd'hui notre jeu affiche une carte avec des cases réservées à la construction de tours. Nous sommes capables de construire des tours ainsi que de les améliorer. Les ennemis apparaissent à un endroit de la carte et se dirigent vers un autre endroit. Nous avons également implémenté un système de vague d'ennemis encore incomplet. Cependant il nous est 
-encore pas possible de tuer des ennemis ainsi que de gagner ou de perdre la partie.
+Aujourd'hui notre jeu affiche une carte avec des cases réservées à la construction de tours. Nous sommes capables de construire des tours ainsi que de les améliorer. Les ennemis apparaissent au début du parcourt et se dirigent vers la fin de celui-ci sous forme de vague. Nous avons également implémenté un système de vague d'ennemis qui au fil du temps ajoute de nouveaux monstres. Nos tours tirent sur les monstres et sont capables de les tuer (pas d'animation de tir + bug : les tours tirent sur tous les ennemies).
 
 ### Améliorations possibles
 
-Nous aurrions aimé implémenter le système pour tuer les ennemis car cela nous aurait permi d'avoir un début de vrai gameplay.
+Nous aurions ajouter le système d'argent pour acheter les tours, argent qui se serait récupérer en tuant des monstres. De plus, on aurait pu ajouter davantage de monstres et de tours pour diversifier les éléments de jeu. Enfin, nous aurrions pu améliorer le système de jeu en ajoutant différentes cartes pour chaque niveau. Il aurait été intéressant d'ajouter une détection de défaiite, lorsque trop de monstre atteingne la fin de la carte.
 
 # Partie "Développeur" (plus technique) :
-
 
 ### Implémentations remarquables
 
@@ -49,13 +46,16 @@ Nous aurrions aimé implémenter le système pour tuer les ennemis car cela nous
 
 ### Faiblesses du code
 
-[C'est ici que vous me dites ce que vous savez que vous avez mal fait, expliquez pourquoi vous avez fait ce choix (manque de temps, manque de compétence, trop pénible à faire, etc.)]
+Le système de carte n'est pas très pratique car il faut modifier des chaines de caractères pour changer la carte. 
+Certains élément du magasin sont codés en dur, ce qui peut rendre difficile l'ajout de nouveaux éléments. De plus, leur affichage dépend d'un ordre précis dans notre StackPane qui n'est pas très compréhensible si un autre développeur intégrait notre groupe.
 
 ### Difficultés rencontrées
 
 #### 1. [Génération dynamique des ... pour ...]
 
-[Expliquez ici la difficulté rencontrée et comment vous l'avez contournée]
+Nous avons eu des difficultés à générer dynamiquement les vagues d'ennemis ainsi qu'à leur faire parcourir un chemin prédéfini. Pour parvenir à nos fins, nous avons créé une liste de "waypoint" qui sont des points de passage obligatoire pour les ennemis qui se déplace vers ce point tant qu'il ne l'on pas approché.
+
+Nous avons également eu des difficultés pour la gestion des tours, leur affichage et amélioration. Pour y arriver, nous avons créé une classe "Tour" qui contient les attributs de base de chaque tour, et des classes filles qui héritent de cette classe et qui contiennent les attributs spécifiques à chaque tour. Nous avons également utilisé le design pattern "Decorator" pour gérer les améliorations des tours.
 
 #### 2. [Gestion des collisions]
 
